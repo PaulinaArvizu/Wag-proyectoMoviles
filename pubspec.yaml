@@ -74,3 +74,27 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Poppins Extra Light
+      fonts:
+        - asset: assets\fonts\Poppins\Poppins-ExtraLight.ttf
+    
+    - family: Poppins Bold
+      fonts:
+        - asset: assets\fonts\Poppins\Poppins-Bold.ttf
+    
+    - family: Roboto Black Italic
+      fonts:
+        - asset: assets\fonts\Roboto\Roboto-BlackItalic.ttf
+    
+    - family: Proxima Nova Regular
+      fonts:
+        - asset: assets\fonts\Proxima Nova\ProximaNova-Regular.ttf
+    
+    - family: Proxima Nova SemiBold
+      fonts:
+        - asset: assets\fonts\Proxima Nova\ProximaNova-Regular.ttf
+    
