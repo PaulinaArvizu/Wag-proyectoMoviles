@@ -44,13 +44,14 @@ class _LogInState extends State<LogIn> {
                 Container(
                   alignment: Alignment.center,
                   padding:
-                      EdgeInsets.only(left: 30, right: 30, top: 20, bottom: 15),
+                      EdgeInsets.only(left: 22, right: 22, top: 20, bottom: 15),
                   child: TextFormField(
                     controller: null,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color(0xffE2E2E2), width: 0.6),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: primary, width: 0.6),
@@ -73,13 +74,14 @@ class _LogInState extends State<LogIn> {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 30, right: 30, bottom: 10),
+                  padding: EdgeInsets.only(left: 22, right: 22, bottom: 20),
                   child: TextFormField(
                     controller: null,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide:
                             BorderSide(color: Color(0xffE2E2E2), width: 0.6),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: primary, width: 0.6),
@@ -103,8 +105,28 @@ class _LogInState extends State<LogIn> {
                 Text(
                   "FORGOT PASSWORD?",
                   style: TextStyle(
-                    fontFamily: 'Poppins Medium',
+                    fontFamily: 'Poppins SemiBold',
                     fontSize: 12,
+                    color: Color(0xFF707070),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(left: 22, right: 22, bottom: 20),
+                  child: RaisedButton(
+                    onPressed: null,
+                    child: Text(
+                      "LOGIN",
+                      style: TextStyle(
+                        fontFamily: 'Poppins SemiBold',
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: primary),
+                    ),
                   ),
                 ),
               ],
