@@ -65,6 +65,18 @@ flutter:
     - family: Poppins Extra Light
       fonts:
         - asset: assets\fonts\Poppins\Poppins-ExtraLight.ttf
+
+    - family: Poppins Light
+      fonts:
+        - asset: assets\fonts\Poppins\Poppins-Light.ttf
+    
+    - family: Poppins Medium
+      fonts:
+        - asset: assets\fonts\Poppins\Poppins-Medium.ttf
+    
+    - family: Poppins Regular
+      fonts:
+        - asset: assets\fonts\Poppins\Poppins-Regular.ttf
     
     - family: Poppins Bold
       fonts:
