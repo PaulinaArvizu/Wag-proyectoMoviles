@@ -112,20 +112,43 @@ class _LogInState extends State<LogIn> {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  padding: EdgeInsets.only(left: 22, right: 22, bottom: 20),
-                  child: RaisedButton(
-                    onPressed: null,
+                  padding:
+                      EdgeInsets.only(left: 22, right: 22, bottom: 20, top: 20),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: FlatButton(
+                      padding: EdgeInsets.all(20),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(color: primary)),
+                      onPressed: () {},
+                      color: primary,
+                      textColor: Colors.white,
+                      child: Text("LOGIN",
+                          style: TextStyle(
+                            fontFamily: 'Poppins SemiBold',
+                            fontSize: 16,
+                          )),
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: FlatButton(
+                    // padding: EdgeInsets.all(20),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                      side: BorderSide(color: secondary_background),
+                    ),
+                    onPressed: () {},
+                    color: secondary_background,
+                    textColor: secondary,
                     child: Text(
-                      "LOGIN",
+                      "SIGN UP",
                       style: TextStyle(
                         fontFamily: 'Poppins SemiBold',
-                        fontSize: 16,
-                        color: Colors.white,
+                        fontSize: 12,
                       ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      side: BorderSide(color: primary),
                     ),
                   ),
                 ),
