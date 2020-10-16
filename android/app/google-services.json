@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "331833098964",
+    "firebase_url": "https://wag-proyecto-moviles.firebaseio.com",
+    "project_id": "wag-proyecto-moviles",
+    "storage_bucket": "wag-proyecto-moviles.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331833098964:android:d1594dd9d0f90d395bb141",
+        "android_client_info": {
+          "package_name": "com.example.wag_proyecto_moviles"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331833098964-isi79f2v2js3jn7hkjvbd9m3q5mded84.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wag_proyecto_moviles",
+            "certificate_hash": "9dd86eb3e50bb4310568df506c7b632fa016f126"
+          }
+        },
+        {
+          "client_id": "331833098964-fsepajfrf8jtaq4922dqattf9oh8l9ri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjlwxaLhC8gAjwg8vkLuY5LXLkrgiLTU0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331833098964-fsepajfrf8jtaq4922dqattf9oh8l9ri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
