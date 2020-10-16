@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/cart/cart.dart';
+import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
+import 'package:wag_proyecto_moviles/store/store.dart';
 
 void main() => runApp(HomePage());
 
@@ -18,12 +20,30 @@ class _HomePageState extends State<HomePage> {
       title: 'Material App',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Material App Bar'),
+          centerTitle: true,
+          title: Text(
+            "Wag",
+            style: TextStyle(
+              fontFamily: 'Sofia Pro Bold',
+              fontSize: 24,
+            ),
+          ),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.shopping_cart),
-              onPressed: _openCartPage,
-            )
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              onPressed: () {},
+            ),
+            IconButton(
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  _openCartPage();
+                }),
           ],
         ),
         body: ListView(
@@ -52,10 +72,6 @@ class _HomePageState extends State<HomePage> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.add_circle),
               label: 'New',
             ),
@@ -69,20 +85,19 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor:
-              Colors.amber[800], //TODO: SelectedItemColor: primary
+          selectedItemColor: primary,
           unselectedItemColor: Colors.grey,
           onTap: (int index) {
             setState(() {
               _selectedIndex = index;
             });
-            if (_selectedIndex == 1) {
-              //TODO: open search page?
+            if (_selectedIndex == 0) {
+              //TODO: open homepage
+            } else if (_selectedIndex == 1) {
+              //open new page
             } else if (_selectedIndex == 2) {
-              //TODO: open new page
+              _openStorePage();
             } else if (_selectedIndex == 3) {
-              //TODO: open store page
-            } else if (_selectedIndex == 4) {
               //TODO: open profile page
             }
           },
@@ -91,7 +106,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  //TODO: freate voids to open each page
+  //TODO: create voids to open each page
+
+  void _openHomePage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return HomePage();
+      }),
+    );
+  }
+
   void _openCartPage() {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
@@ -101,6 +125,15 @@ class _HomePageState extends State<HomePage> {
       }),
     );
   }
+
+  void _openStorePage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return Store();
+      }),
+    );
+  }
+
   // Widget navBar(int _selectedIndex) {
   //   return BottomNavigationBar(
   //     items: <BottomNavigationBarItem>[
