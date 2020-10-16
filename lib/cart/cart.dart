@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/cart/item_cart.dart';
+import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
-import 'package:wag_proyecto_moviles/payment.dart';
+// import 'package:wag_proyecto_moviles/payment.dart';
 
 class Cart extends StatefulWidget {
   final List<ProductItemCart> productsList;
@@ -27,57 +28,62 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Carrito de Compras'),
-      ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height * 0.9,
-            child: ListView.builder(
-              itemCount: widget.productsList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ItemCart(
-                  onAmountUpdated: _priceUpdate,
-                  product: widget.productsList[index],
-                );
-              },
-            ),
-          ),
-          Positioned(
-            bottom: 50,
-            child: Text("Total: \$$_total"),
-          ),
-          Positioned(
-            bottom: 0,
-            child: RaisedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return Payment();
-                }));
-              },
-              textColor: Colors.white,
-              padding: const EdgeInsets.all(0.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: <Color>[
-                      Color(0xFF0D47A1),
-                      Color(0xFF1976D2),
-                      Color(0xFF42A5F5),
-                    ],
-                  ),
-                ),
-                padding: const EdgeInsets.all(10.0),
-                child: const Text('Pagar', style: TextStyle(fontSize: 20)),
-              ),
-            ),
-          ),
-        ],
+      backgroundColor: background,
+      body: ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        itemCount: widget.productsList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ItemCart(
+            onAmountUpdated: _priceUpdate,
+            item: widget.productsList[index],
+          );
+        },
       ),
     );
+    // Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('Carrito de Compras'),
+    //   ),
+    //   body: Stack(
+    //     children: <Widget>[
+    //       Container(
+    //         height: MediaQuery.of(context).size.height * 0.9,
+    //         child: ListView.builder(
+    //           itemCount: widget.productsList.length,
+    //           itemBuilder: (BuildContext context, int index) {
+    //             return ItemCart(
+    //               onAmountUpdated: _priceUpdate,
+    //               cartItemsList:
+    //                   widget.productsList, //widget.productsList[index],
+    //             );
+    //           },
+    //         ),
+    //       ),
+    //       Positioned(
+    //         bottom: 50,
+    //         child: Text("Total: \$$_total"),
+    //       ),
+    //       Positioned(
+    //         bottom: 0,
+    //         child: RaisedButton(
+    //           onPressed: () {
+    //             Navigator.of(context).pop();
+    //             Navigator.of(context)
+    //                 .push(MaterialPageRoute(builder: (context) {
+    //               return Payment();
+    //             }));
+    //           },
+    //           textColor: Colors.white,
+    //           padding: const EdgeInsets.all(0.0),
+    //           child: Container(
+    //             padding: const EdgeInsets.all(10.0),
+    //             child: const Text('Pagar', style: TextStyle(fontSize: 20)),
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   void _priceUpdate(double newItemPrice) {
