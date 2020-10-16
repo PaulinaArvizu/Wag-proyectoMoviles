@@ -29,15 +29,81 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
-      body: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        itemCount: widget.productsList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ItemCart(
-            onAmountUpdated: _priceUpdate,
-            item: widget.productsList[index],
-          );
-        },
+      body: Column(
+        children: [
+          Expanded(
+            flex: 4,
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              itemCount: widget.productsList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ItemCart(
+                  onAmountUpdated: _priceUpdate,
+                  item: widget.productsList[index],
+                );
+              },
+            ),
+          ),
+          Expanded(
+              flex: 1,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Card(
+                  color: subtotal_background,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  margin: EdgeInsets.symmetric(vertical: 15),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Subtotal: ",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Proxima Nova Regular',
+                            ),
+                          ),
+                          Text(
+                            "\$${_total.toStringAsFixed(2)} MXN",
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontFamily: 'Proxima Nova Regular'),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(horizontal: 45),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: FlatButton(
+                            // padding: EdgeInsets.all(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            onPressed: () {},
+                            color: pagar_background,
+                            textColor: Colors.white,
+                            child: Text("PAGAR",
+                                style: TextStyle(
+                                  fontFamily: 'Poppins SemiBold',
+                                  fontSize: 20,
+                                )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+        ],
       ),
     );
     // Scaffold(
