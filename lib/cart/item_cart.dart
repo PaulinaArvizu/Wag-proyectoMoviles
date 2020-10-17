@@ -52,7 +52,7 @@ class _ItemCartState extends State<ItemCart> {
                         Text(
                           widget.item.productTitle,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                          maxLines: 2,
                           style: TextStyle(fontSize: 18),
                         ),
                         Text(
@@ -63,21 +63,24 @@ class _ItemCartState extends State<ItemCart> {
                     ),
                   ),
                   Expanded(
-                    flex: 2,
+                    flex: 5,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Icon(Icons.delete),
-                        SizedBox(height: 70),
+                        SizedBox(height: 50),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.remove_circle),
-                            Container(
-                              margin: EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(widget.item.productAmount.toString()),
+                            IconButton(
+                              icon: Icon(Icons.remove_circle),
+                              onPressed: () {},
                             ),
-                            Icon(Icons.add_circle),
+                            Text(widget.item.productAmount.toString()),
+                            IconButton(
+                              icon: Icon(Icons.add_circle),
+                              onPressed: () {},
+                            ),
                           ],
                         )
                       ],
@@ -90,44 +93,6 @@ class _ItemCartState extends State<ItemCart> {
         ),
       ),
     );
-    // Card(
-    //   margin: EdgeInsets.all(24),
-    //   child: Column(
-    //     children: <Widget>[
-    //       SizedBox(
-    //         height: 12,
-    //       ),
-    //       Text("${widget.product.productTitle}"),
-    //       SizedBox(
-    //         height: 12,
-    //       ),
-    //       IconButton(icon: Icon(Icons.add_circle_outline), onPressed: _addProd),
-    //       SizedBox(
-    //         height: 12,
-    //       ),
-    //       Container(
-    //         child: Padding(
-    //             padding: EdgeInsets.all(10),
-    //             child: Image.network(widget.product.productImage)),
-    //       ),
-    //       SizedBox(
-    //         height: 12,
-    //       ),
-    //       IconButton(icon: Icon(Icons.remove_circle), onPressed: _remProd),
-    //       SizedBox(
-    //         height: 12,
-    //       ),
-    //       Text("${widget.product.productAmount}"),
-    //       SizedBox(
-    //         height: 12,
-    //       ),
-    //       Text("${widget.product.productPrice}"),
-    //       SizedBox(
-    //         height: 12,
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 
   void _addProd() {
