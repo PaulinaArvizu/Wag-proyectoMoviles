@@ -4,6 +4,7 @@ import 'package:wag_proyecto_moviles/cart/cart.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/home_page.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
+import 'package:wag_proyecto_moviles/models/product_repository.dart';
 import 'package:wag_proyecto_moviles/store/product.dart';
 
 class Store extends StatefulWidget {
@@ -101,7 +102,16 @@ class _StoreState extends State<Store> {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         return Cart(
-          productsList: productList,
+          productsList: ProductRepository.loadProducts().map(
+            (product) {
+              return new ProductItemCart(
+                productTitle: product.productTitle,
+                productImage: product.productImage,
+                productAmount: 0,
+                productPrice: product.productPrice,
+              );
+            },
+          ).toList(),
         );
       }),
     );

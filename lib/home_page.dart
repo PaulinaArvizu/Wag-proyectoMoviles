@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/cart/cart.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
+import 'package:wag_proyecto_moviles/models/product_repository.dart';
 import 'package:wag_proyecto_moviles/store/store.dart';
 
 void main() => runApp(HomePage());
@@ -92,7 +93,7 @@ class _HomePageState extends State<HomePage> {
               _selectedIndex = index;
             });
             if (_selectedIndex == 0) {
-              //TODO: open homepage
+              _openHomePage();
             } else if (_selectedIndex == 1) {
               //open new page
             } else if (_selectedIndex == 2) {
@@ -120,7 +121,16 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         return Cart(
-          productsList: productList,
+          productsList: ProductRepository.loadProducts().map(
+            (product) {
+              return new ProductItemCart(
+                productTitle: product.productTitle,
+                productImage: product.productImage,
+                productAmount: 0,
+                productPrice: product.productPrice,
+              );
+            },
+          ).toList(),
         );
       }),
     );

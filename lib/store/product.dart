@@ -4,7 +4,9 @@ import 'package:wag_proyecto_moviles/models/product_item.dart';
 import 'package:wag_proyecto_moviles/models/product_repository.dart';
 
 class Product extends StatefulWidget {
-  Product({Key key}) : super(key: key);
+  Product({
+    Key key,
+  }) : super(key: key);
 
   @override
   _ProductState createState() => _ProductState();
