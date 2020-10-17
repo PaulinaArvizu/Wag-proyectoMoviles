@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
       title: 'Material App',
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: primary,
           centerTitle: true,
           title: Text(
             "Wag",

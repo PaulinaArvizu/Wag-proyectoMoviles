@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
-import 'package:wag_proyecto_moviles/models/product_item.dart';
-import 'package:wag_proyecto_moviles/store/product.dart';
 import 'package:wag_proyecto_moviles/home_page.dart';
 
 void main() => runApp(MyApp());
@@ -15,14 +13,6 @@ class MyApp extends StatelessWidget {
           backgroundColor: primary,
           primaryColor: primary,
           accentColor: primary,
-          textTheme: TextTheme(
-              //   headline6: TextStyle(color: Colors.greenAccent),
-              // bodyText1: TextStyle(
-              //     color: Colors.redAccent,
-              // fontSize: 42,
-              //     fontWeight: FontWeight.w900,
-              // ),
-              ),
           fontFamily: "Poppins Regular",
         ),
         home: HomePage()
