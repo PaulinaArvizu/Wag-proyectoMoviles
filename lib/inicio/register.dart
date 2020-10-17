@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
-import 'package:wag_proyecto_moviles/home_page.dart';
+import 'package:wag_proyecto_moviles/home/home_page.dart';
 import 'package:wag_proyecto_moviles/inicio/bloc/login_bloc.dart';
 import 'package:wag_proyecto_moviles/inicio/login.dart';
 

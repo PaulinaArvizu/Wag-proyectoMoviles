@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
-import 'package:wag_proyecto_moviles/home_page.dart';
+import 'package:wag_proyecto_moviles/home/home_page.dart';
 
 void main() => runApp(MyApp());
 
