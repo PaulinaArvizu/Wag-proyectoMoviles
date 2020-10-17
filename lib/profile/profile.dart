@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wag_proyecto_moviles/cart/cart.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/home_page.dart';
-import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
-import 'package:wag_proyecto_moviles/models/product_repository.dart';
 import 'package:wag_proyecto_moviles/profile/sizeConfig.dart';
 import 'package:wag_proyecto_moviles/store/store.dart';
 
