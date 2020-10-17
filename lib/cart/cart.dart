@@ -29,10 +29,13 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
+      appBar: AppBar(
+        title: Text('Shopping Cart'),
+      ),
       body: Column(
         children: [
           Expanded(
-            flex: 4,
+            flex: 3,
             child: ListView.builder(
               scrollDirection: Axis.vertical,
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -84,7 +87,6 @@ class _CartState extends State<Cart> {
                         child: SizedBox(
                           width: double.infinity,
                           child: FlatButton(
-                            // padding: EdgeInsets.all(20),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
