@@ -24,6 +24,7 @@ class _StoreState extends State<Store> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: primary,
         centerTitle: true,
         title: Text(
           "Wag Store",

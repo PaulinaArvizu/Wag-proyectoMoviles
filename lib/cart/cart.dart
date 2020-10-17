@@ -30,6 +30,7 @@ class _CartState extends State<Cart> {
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(
+        backgroundColor: primary,
         title: Text('Shopping Cart'),
       ),
       body: Column(
