@@ -55,6 +55,7 @@ flutter:
     - assets/images/Logo wag.png
     - assets/images/cassie.jpeg
     - assets/images/perritos.jpg
+    - assets/images/perrito feliz.jpg
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
@@ -104,7 +105,7 @@ flutter:
     
     - family: Proxima Nova SemiBold
       fonts:
-        - asset: assets\fonts\Proxima Nova\ProximaNova-Regular.ttf
+        - asset: assets\fonts\Proxima Nova\ProximaNova-SemiBold.ttf
   # example:
   # fonts:
   #   - family: Schyler
