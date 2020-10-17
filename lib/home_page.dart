@@ -3,6 +3,7 @@ import 'package:wag_proyecto_moviles/cart/cart.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
 import 'package:wag_proyecto_moviles/models/product_repository.dart';
+import 'package:wag_proyecto_moviles/profile/profile.dart';
 import 'package:wag_proyecto_moviles/store/store.dart';
 
 void main() => runApp(HomePage());
@@ -99,7 +100,7 @@ class _HomePageState extends State<HomePage> {
             } else if (_selectedIndex == 2) {
               _openStorePage();
             } else if (_selectedIndex == 3) {
-              //TODO: open profile page
+              _openProfilePage();
             }
           },
         ),
@@ -140,6 +141,14 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         return Store();
+      }),
+    );
+  }
+
+  void _openProfilePage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return Profile();
       }),
     );
   }

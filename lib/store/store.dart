@@ -5,6 +5,7 @@ import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/home_page.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
 import 'package:wag_proyecto_moviles/models/product_repository.dart';
+import 'package:wag_proyecto_moviles/profile/profile.dart';
 import 'package:wag_proyecto_moviles/store/product.dart';
 
 class Store extends StatefulWidget {
@@ -83,7 +84,7 @@ class _StoreState extends State<Store> {
           } else if (_selectedIndex == 2) {
             _openStorePage();
           } else if (_selectedIndex == 3) {
-            //TODO: open profile page
+            _openProfilePage();
           }
         },
       ),
@@ -121,6 +122,14 @@ class _StoreState extends State<Store> {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         return Store();
+      }),
+    );
+  }
+
+  void _openProfilePage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return Profile();
       }),
     );
   }
