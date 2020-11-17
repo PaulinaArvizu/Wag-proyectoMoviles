@@ -42,7 +42,6 @@ class ProfileFirst extends StatefulWidget {
 }
 
 class _ProfileFirstState extends State<ProfileFirst> {
-  int _selectedIndex = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -316,22 +315,6 @@ class _ProfileFirstState extends State<ProfileFirst> {
           ),
         ),
       ),
-    );
-  }
-
-  void _openHomePage() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) {
-        return HomePage();
-      }),
-    );
-  }
-
-  void _openStorePage() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) {
-        return Store();
-      }),
     );
   }
 }
