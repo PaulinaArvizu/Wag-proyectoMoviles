@@ -46,6 +46,7 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
           event.description,
           event.authorID,
           imageUrl,
+          event.contactInfo,
         );
         yield NewPostCreatedState();
       } catch (e) {
@@ -69,6 +70,7 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
             description: element["description"],
             authorID: element["authorID"],
             date: element["date"],
+            contactInfo: element["contactInfo"],
           ),
         )
         .toList();
@@ -83,6 +85,7 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
     String description,
     String authorID,
     String imageUrl,
+    String contactInfo,
   ) async {
     // Crea un doc en la collection de posts
     await FirebaseFirestore.instance.collection("posts").doc().set({
@@ -93,6 +96,7 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
       "description": description,
       "authorID": authorID,
       "date": DateTime.now().toString(),
+      "contactInfo": contactInfo
     });
   }
 

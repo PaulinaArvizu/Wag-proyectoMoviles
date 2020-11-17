@@ -13,6 +13,7 @@ class CreateNewPostEvent extends NewPostEvent {
   final String age;
   final String description;
   final String authorID;
+  final String contactInfo;
 
   CreateNewPostEvent({
     @required this.name,
@@ -20,6 +21,7 @@ class CreateNewPostEvent extends NewPostEvent {
     @required this.age,
     @required this.description,
     @required this.authorID,
+    @required this.contactInfo,
   });
 
   @override

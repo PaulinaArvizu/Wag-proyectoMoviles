@@ -16,6 +16,7 @@ class _NewPostState extends State<NewPost> {
   TextEditingController _sizeController = TextEditingController();
   TextEditingController _ageController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _contactInfoController = TextEditingController();
 
   File _chosenImage;
   NewPostBloc _bloc;
@@ -156,6 +157,7 @@ class _NewPostState extends State<NewPost> {
                     age: _ageController.text,
                     description: _descriptionController.text,
                     authorID: "123",
+                    contactInfo: _contactInfoController.text,
                   ),
                 );
                 print("Exit onPressed");

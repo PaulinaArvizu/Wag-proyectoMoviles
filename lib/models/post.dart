@@ -8,6 +8,7 @@ class Post {
   final String description;
   final String authorID;
   final String date;
+  final String contactInfo;
 
   Post({
     @required this.name,
@@ -17,5 +18,6 @@ class Post {
     @required this.description,
     @required this.authorID,
     @required this.date,
+    @required this.contactInfo,
   });
 }
