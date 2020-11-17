@@ -119,12 +119,15 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
 
   Future<File> _chooseImage(bool fromCamera) async {
     final picker = ImagePicker();
-    final PickedFile chooseImage = await picker.getImage(
+    final PickedFile chosenImage = await picker.getImage(
       source: fromCamera ? ImageSource.camera : ImageSource.gallery,
       maxHeight: 720,
       maxWidth: 720,
       imageQuality: 85,
     );
-    return File(chooseImage.path);
+    if (chosenImage != null)
+      return File(chosenImage.path);
+    else
+      return null;
   }
 }
