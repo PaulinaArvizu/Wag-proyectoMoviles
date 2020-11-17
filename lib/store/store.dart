@@ -52,43 +52,6 @@ class _StoreState extends State<Store> {
         ],
       ),
       body: Product(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle),
-            label: 'New',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.storefront),
-            label: 'Store',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: primary,
-        unselectedItemColor: Colors.grey,
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-          if (_selectedIndex == 0) {
-            _openHomePage();
-          } else if (_selectedIndex == 1) {
-            //open new page
-          } else if (_selectedIndex == 2) {
-            _openStorePage();
-          } else if (_selectedIndex == 3) {
-            _openProfilePage();
-          }
-        },
-      ),
     );
   }
 
