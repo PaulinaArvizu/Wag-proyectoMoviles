@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
+import 'package:wag_proyecto_moviles/store/bloc/store_bloc.dart';
 
 class ItemCart extends StatefulWidget {
   final ProductItemCart item;
-  final ValueChanged<double> onAmountUpdated;
+  final int itemIndex;
+  // final ValueChanged<double> onAmountUpdated;
+  final StoreBloc storeBloc;
+  // final StoreState storeState;
   ItemCart({
     Key key,
-    @required this.onAmountUpdated,
+    // @required this.onAmountUpdated,
     @required this.item,
+    @required this.itemIndex,
+    @required this.storeBloc,
+    // @required this.storeState,
   }) : super(key: key);
 
   @override
@@ -67,19 +74,22 @@ class _ItemCartState extends State<ItemCart> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(Icons.delete),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: _deleteProduct,
+                        ),
                         SizedBox(height: 50),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
                               icon: Icon(Icons.remove_circle),
-                              onPressed: () {},
+                              onPressed: _substractAmount,
                             ),
                             Text(widget.item.productAmount.toString()),
                             IconButton(
                               icon: Icon(Icons.add_circle),
-                              onPressed: () {},
+                              onPressed: _sumAmount,
                             ),
                           ],
                         )
@@ -95,18 +105,33 @@ class _ItemCartState extends State<ItemCart> {
     );
   }
 
-  void _addProd() {
+  void _sumAmount() {
     setState(() {
       ++widget.item.productAmount;
     });
-    widget.onAmountUpdated(widget.item.productPrice);
+    widget.storeBloc.add(UpdateCartEvent(
+      product: widget.item,
+      productIndex: widget.itemIndex,
+    ));
   }
 
-  void _remProd() {
+  void _substractAmount() {
+    if (widget.item.productAmount == 1) {
+      _deleteProduct();
+      return;
+    }
     setState(() {
       --widget.item.productAmount;
-      if (widget.item.productAmount <= 0) widget.item.productAmount = 0;
     });
-    widget.onAmountUpdated(-1 * widget.item.productPrice);
+    widget.storeBloc.add(UpdateCartEvent(
+      product: widget.item,
+      productIndex: widget.itemIndex,
+    ));
+  }
+
+  void _deleteProduct() {
+    widget.storeBloc.add(RemoveFromCartEvent(
+      productIndex: widget.itemIndex,
+    ));
   }
 }
