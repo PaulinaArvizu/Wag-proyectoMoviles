@@ -15,7 +15,6 @@ class ProductDetail extends StatefulWidget {
 
 class _ProductDetailState extends State<ProductDetail> {
   bool expandedText = false;
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
