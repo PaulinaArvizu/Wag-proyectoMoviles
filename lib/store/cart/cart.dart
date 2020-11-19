@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wag_proyecto_moviles/cart/item_cart.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
+
+import 'item_cart.dart';
 // import 'package:wag_proyecto_moviles/payment.dart';
 
 class Cart extends StatefulWidget {
