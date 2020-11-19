@@ -20,7 +20,7 @@ void main() async {
     ..init(_localStorage.path)
     ..registerAdapter(ProductItemCartAdapter());
   //open boxes
-  await Hive.openBox("Reminder");
+  await Hive.openBox("Cart");
 
   runApp(MyApp());
 }
