@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:wag_proyecto_moviles/inicio/login.dart';
 
+import 'models/product_item_cart.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  //firebase
   await Firebase.initializeApp();
+
+  //hive
+  //local storage
+  final _localStorage = await getApplicationDocumentsDirectory();
+  Hive
+    ..init(_localStorage.path)
+    ..registerAdapter(ProductItemCartAdapter());
+  //open boxes
+  await Hive.openBox("Reminder");
+
   runApp(MyApp());
 }
 
