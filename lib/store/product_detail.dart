@@ -14,6 +14,7 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
+  bool expandedText = false;
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -62,16 +63,42 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
             ),
             SizedBox(height: 25),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 30),
-              //TODO: preguntar como hacerle para textos grandes
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Text(
-                  widget.product.productDescription,
-                  style: TextStyle(fontSize: 18),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 5,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 30),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: expandedText
+                          ? Text(
+                              widget.product.productDescription,
+                              style: TextStyle(fontSize: 18),
+                            )
+                          : Text(
+                              widget.product.productDescription,
+                              style: TextStyle(fontSize: 18),
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                  child: IconButton(
+                    icon: expandedText
+                        ? Icon(Icons.arrow_circle_up)
+                        : Icon(Icons.arrow_circle_down),
+                    onPressed: () {
+                      setState(() {
+                        expandedText = !expandedText;
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
             Container(
               alignment: Alignment.center,
@@ -101,38 +128,6 @@ class _ProductDetailState extends State<ProductDetail> {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle),
-            label: 'New',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.storefront),
-            label: 'Store',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: primary,
-        unselectedItemColor: Colors.grey,
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
       ),
     );
   }
