@@ -10,7 +10,7 @@ abstract class StoreEvent extends Equatable {
 class LoadCartEvent extends StoreEvent {}
 
 class AddToCartEvent extends StoreEvent {
-  final Product product;
+  final ProductItemCart product;
 
   AddToCartEvent({@required this.product});
   @override
@@ -18,10 +18,13 @@ class AddToCartEvent extends StoreEvent {
 }
 
 class UpdateCartEvent extends StoreEvent {
-  final Product product;
+  final ProductItemCart product;
   final int productIndex;
 
-  UpdateCartEvent({@required this.product, this.productIndex});
+  UpdateCartEvent({
+    @required this.product,
+    @required this.productIndex,
+  });
   @override
   List<Object> get props => [product, productIndex];
 }
