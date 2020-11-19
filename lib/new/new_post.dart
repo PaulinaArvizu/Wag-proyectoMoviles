@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/new/bloc/new_post_bloc.dart';
 
+import '../colors.dart';
+
 class NewPost extends StatefulWidget {
   NewPost({Key key}) : super(key: key);
 
@@ -27,7 +29,15 @@ class _NewPostState extends State<NewPost> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text("New post"),
+        backgroundColor: primary,
+        centerTitle: true,
+        title: Text(
+          "New Post",
+          style: TextStyle(
+            fontFamily: 'Sofia Pro Bold',
+            fontSize: 24,
+          ),
+        ),
       ),
       body: BlocProvider(
         create: (context) {
@@ -108,48 +118,107 @@ class _NewPostState extends State<NewPost> {
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
-                hintText: "Name",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xffE2E2E2)),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primary),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor: Colors.white,
+                filled: true,
+                hintText: "Name",
+                hintStyle: TextStyle(color: Colors.grey),
               ),
+              style: TextStyle(fontFamily: 'Poppins Regular'),
             ),
             SizedBox(height: 12),
             TextField(
               controller: _sizeController,
               decoration: InputDecoration(
-                hintText: "Size",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xffE2E2E2)),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primary),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor: Colors.white,
+                filled: true,
+                hintText: "Size",
+                hintStyle: TextStyle(color: Colors.grey),
               ),
+              style: TextStyle(fontFamily: 'Poppins Regular'),
             ),
             SizedBox(height: 12),
             TextField(
               controller: _ageController,
               decoration: InputDecoration(
-                hintText: "Age (aprox.)",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xffE2E2E2)),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primary),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor: Colors.white,
+                filled: true,
+                hintText: "Age (aprox.)",
+                hintStyle: TextStyle(color: Colors.grey),
               ),
+              style: TextStyle(fontFamily: 'Poppins Regular'),
             ),
             SizedBox(height: 12),
             TextField(
               controller: _descriptionController,
               maxLines: 5,
               decoration: InputDecoration(
-                hintText: "Description",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xffE2E2E2)),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primary),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor: Colors.white,
+                filled: true,
+                hintText: "Description",
+                hintStyle: TextStyle(color: Colors.grey),
               ),
+              style: TextStyle(fontFamily: 'Poppins Regular'),
+            ),
+            SizedBox(height: 12),
+            TextField(
+              controller: _contactInfoController,
+              maxLines: 5,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xffE2E2E2)),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: primary),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor: Colors.white,
+                filled: true,
+                hintText: "Contact Information",
+                hintStyle: TextStyle(color: Colors.grey),
+              ),
+              style: TextStyle(fontFamily: 'Poppins Regular'),
             ),
             SizedBox(height: 24),
-            RaisedButton(
-              child: Text("Post"),
+            FlatButton(
+              minWidth: 150,
+              padding: EdgeInsets.all(10),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: BorderSide(color: primary)),
               onPressed: () {
-                print("Enter onPressed");
                 _bloc.add(
                   CreateNewPostEvent(
                     name: _nameController.text,
@@ -160,8 +229,16 @@ class _NewPostState extends State<NewPost> {
                     contactInfo: _contactInfoController.text,
                   ),
                 );
-                print("Exit onPressed");
               },
+              color: primary,
+              textColor: Colors.white,
+              child: Text(
+                "POST",
+                style: TextStyle(
+                  fontFamily: 'Poppins SemiBold',
+                  fontSize: 16,
+                ),
+              ),
             ),
           ],
         ),
