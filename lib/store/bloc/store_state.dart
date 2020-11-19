@@ -10,7 +10,7 @@ abstract class StoreState extends Equatable {
 class StoreInitial extends StoreState {}
 
 class CartLoadedState extends StoreState {
-  final List<Product> productsList;
+  final List<ProductItemCart> productsList;
 
   CartLoadedState({@required this.productsList});
   @override
@@ -20,3 +20,7 @@ class CartLoadedState extends StoreState {
 class ProductAddedState extends StoreState {}
 
 class ProductRemovedState extends StoreState {}
+
+class CartUpdatedState extends StoreState {}
+
+class EmptyCartState extends StoreState {}
