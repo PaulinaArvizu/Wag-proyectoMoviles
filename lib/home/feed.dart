@@ -92,10 +92,14 @@ class _FeedState extends State<Feed> {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 22),
           SizedBox(
-            child: Image.asset("assets/images/perrito feliz.jpg"),
+            height: 247,
+            child: Image.asset(
+              "assets/images/perrito feliz.jpg",
+            ),
           ),
+          SizedBox(height: 12),
           Row(
             children: [
               SizedBox(width: 25),
@@ -214,11 +218,21 @@ class _FeedState extends State<Feed> {
       context: context,
       builder: (_) {
         return AlertDialog(
-          title: Text("Contact Info"),
+          title: Row(
+            children: [
+              // Icon(Icons.info_outline),
+              Image.asset(
+                'assets/images/contactInfoIcon.png',
+                height: 40,
+              ),
+              SizedBox(width: 10),
+              Text("Contact Information"),
+            ],
+          ),
           content: Text(contactInfo ?? ''),
           actions: [
             FlatButton(
-              onPressed: () {},
+              onPressed: () => Navigator.of(_).pop(),
               child: Text(
                 "ACEPTAR",
                 style: TextStyle(
