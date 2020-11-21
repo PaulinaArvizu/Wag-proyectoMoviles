@@ -2,7 +2,7 @@ import 'package:wag_proyecto_moviles/models/product_item.dart';
 import 'product_item.dart';
 
 class ProductRepository {
-  static List<dynamic> loadProducts() {
+  static List<ProductItem> loadProducts() {
     return <ProductItem>[
       ProductItem(
         productTitle: 'Taining Treats',

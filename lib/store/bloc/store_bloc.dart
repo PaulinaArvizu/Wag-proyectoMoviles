@@ -34,6 +34,7 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
           _cartElements[index].productAmount++;
           _cartBox.put("products", _cartElements);
           yield CartUpdatedState();
+          yield StandbyState();
           return;
         }
       }
@@ -44,10 +45,12 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       _cartElements.removeAt(event.productIndex);
       _cartBox.put("products", _cartElements);
       yield ProductRemovedState();
+      yield StandbyState();
     } else if (event is UpdateCartEvent) {
       _cartElements[event.productIndex] = event.product;
       _cartBox.put("products", _cartElements);
       yield CartUpdatedState();
+      yield StandbyState();
     }
   }
 }

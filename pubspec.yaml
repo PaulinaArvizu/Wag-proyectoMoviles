@@ -72,9 +72,11 @@ flutter:
     - assets/images/cassie.jpeg
     - assets/images/perritos.jpg
     - assets/images/perrito feliz.jpg
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+    - assets/images/contactInfoIcon.png
+    - assets/images/EmptyCart.png
+    - assets/images/ImageNotFound.png
+    - assets/images/Loading.gif
+    - assets/images/PaymentSuccess.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
