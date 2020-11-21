@@ -20,16 +20,29 @@ class ProductDetail extends StatefulWidget {
 class _ProductDetailState extends State<ProductDetail> {
   bool expandedText = false;
   StoreBloc _storeBloc;
+  var _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: background,
       body: BlocProvider(
         create: (context) {
           _storeBloc = StoreBloc();
           return _storeBloc;
         },
-        child: BlocBuilder<StoreBloc, StoreState>(
+        child: BlocConsumer<StoreBloc, StoreState>(
+          listener: (context, state) {
+            if (state is ProductAddedState || state is CartUpdatedState) {
+              _scaffoldKey.currentState
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text("Added to cart"),
+                  ),
+                );
+            }
+          },
           builder: (context, state) {
             if (state is StoreInitial) {}
             return Center(
