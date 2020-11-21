@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/profile/sizeConfig.dart';
 
+import 'editProfile.dart';
+
 void main() => runApp(Profile());
 
 class Profile extends StatefulWidget {
@@ -98,7 +100,7 @@ class _ProfileFirstState extends State<ProfileFirst> {
                       Column(
                         children: <Widget>[
                           Text(
-                            "12",
+                            "7",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 3 * SizeConfig.textMultiplier,
@@ -113,38 +115,34 @@ class _ProfileFirstState extends State<ProfileFirst> {
                           ),
                         ],
                       ),
-                      Column(
-                        children: <Widget>[
-                          Text(
-                            "5",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 3 * SizeConfig.textMultiplier,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Favorites",
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 1.9 * SizeConfig.textMultiplier,
+                      GestureDetector(
+                        child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              borderRadius: BorderRadius.circular(5.0),
                             ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white60),
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "EDIT PROFILE",
-                            style: TextStyle(
-                                color: Colors.white60,
-                                fontSize: 1.8 * SizeConfig.textMultiplier),
-                          ),
-                        ),
+                            child: Row(
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: null,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "EDIT PROFILE",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize:
+                                            1.8 * SizeConfig.textMultiplier),
+                                  ),
+                                ),
+                              ],
+                            )),
+                        onTap: _openEditProfile,
                       ),
                     ],
                   ),
@@ -155,6 +153,7 @@ class _ProfileFirstState extends State<ProfileFirst> {
           Padding(
             padding: EdgeInsets.only(top: 35 * SizeConfig.heightMultiplier),
             child: Container(
+              padding: EdgeInsets.only(left: 15),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -165,41 +164,143 @@ class _ProfileFirstState extends State<ProfileFirst> {
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 30.0, top: 3 * SizeConfig.heightMultiplier),
-                    ),
                     SizedBox(
-                      height: 3 * SizeConfig.heightMultiplier,
+                      height: SizeConfig.heightMultiplier,
                     ),
                     Container(
-                      height: 37 * SizeConfig.heightMultiplier,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          _myAlbumCard(
-                              "assets/images/perritos.jpg",
-                              "assets/images/perritos.jpg",
-                              "assets/images/perritos.jpg",
-                              "assets/images/perritos.jpg",
-                              "+8",
-                              "Posts"),
-                          _myAlbumCard(
-                              "assets/images/perritos.jpg",
-                              "assets/images/perritos.jpg",
-                              "assets/images/perritos.jpg",
-                              "assets/images/perritos.jpg",
-                              "+1",
-                              "Favorites"),
-                          SizedBox(
-                            width: 10 * SizeConfig.widthMultiplier,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 3 * SizeConfig.heightMultiplier,
-                    ),
+                        height: 60 * SizeConfig.heightMultiplier,
+                        child: GridView.count(
+                          crossAxisCount: 2,
+                          padding: EdgeInsets.all(16.0),
+                          children: [
+                            GestureDetector(
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.asset(
+                                      'assets/images/perritos.jpg',
+                                      height:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      width:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.asset(
+                                      'assets/images/perritos.jpg',
+                                      height:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      width:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.asset(
+                                      'assets/images/perritos.jpg',
+                                      height:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      width:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.asset(
+                                      'assets/images/perritos.jpg',
+                                      height:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      width:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.asset(
+                                      'assets/images/perritos.jpg',
+                                      height:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      width:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.asset(
+                                      'assets/images/perritos.jpg',
+                                      height:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      width:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              child: Row(
+                                children: <Widget>[
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.asset(
+                                      'assets/images/perritos.jpg',
+                                      height:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      width:
+                                          40 * SizeConfig.imageSizeMultiplier,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )),
                   ],
                 ),
               ),
@@ -210,109 +311,11 @@ class _ProfileFirstState extends State<ProfileFirst> {
     );
   }
 
-  _myAlbumCard(String asset1, String asset2, String asset3, String asset4,
-      String more, String name) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 40.0),
-      child: Container(
-        height: 37 * SizeConfig.heightMultiplier,
-        width: 60 * SizeConfig.widthMultiplier,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20.0),
-            border: Border.all(color: Colors.grey, width: 0.2)),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.asset(
-                      asset1,
-                      height: 27 * SizeConfig.imageSizeMultiplier,
-                      width: 27 * SizeConfig.imageSizeMultiplier,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Spacer(),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.asset(
-                      asset2,
-                      height: 27 * SizeConfig.imageSizeMultiplier,
-                      width: 27 * SizeConfig.imageSizeMultiplier,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 1 * SizeConfig.heightMultiplier,
-              ),
-              Row(
-                children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.asset(
-                      asset3,
-                      height: 27 * SizeConfig.imageSizeMultiplier,
-                      width: 27 * SizeConfig.imageSizeMultiplier,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Spacer(),
-                  Stack(
-                    overflow: Overflow.visible,
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Image.asset(
-                          asset4,
-                          height: 27 * SizeConfig.imageSizeMultiplier,
-                          width: 27 * SizeConfig.imageSizeMultiplier,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Positioned(
-                        child: Container(
-                          height: 27 * SizeConfig.imageSizeMultiplier,
-                          width: 27 * SizeConfig.imageSizeMultiplier,
-                          decoration: BoxDecoration(
-                              color: Colors.black38,
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Center(
-                            child: Text(
-                              more,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 2.5 * SizeConfig.textMultiplier,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 10.0, top: 2 * SizeConfig.heightMultiplier),
-                child: Text(
-                  name,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 2 * SizeConfig.textMultiplier,
-                      fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+  void _openEditProfile() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return EditProfile();
+      }),
     );
   }
 }

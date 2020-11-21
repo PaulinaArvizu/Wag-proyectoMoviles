@@ -120,23 +120,26 @@ class _CartState extends State<Cart> {
                             ],
                           ),
                           SizedBox(height: 20),
-                          Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(horizontal: 45),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: FlatButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(horizontal: 45),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  onPressed: () {},
+                                  color: pagar_background,
+                                  textColor: Colors.white,
+                                  child: Text("PAGAR",
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins SemiBold',
+                                        fontSize: 20,
+                                      )),
                                 ),
-                                onPressed: () {},
-                                color: pagar_background,
-                                textColor: Colors.white,
-                                child: Text("PAGAR",
-                                    style: TextStyle(
-                                      fontFamily: 'Poppins SemiBold',
-                                      fontSize: 20,
-                                    )),
                               ),
                             ),
                           ),
