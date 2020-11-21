@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item.dart';
-import 'package:wag_proyecto_moviles/models/product_repository.dart';
 import 'package:wag_proyecto_moviles/store/product_detail.dart';
 
 class Product extends StatefulWidget {
+  final ProductItem product;
   Product({
     Key key,
+    @required this.product,
   }) : super(key: key);
 
   @override
@@ -16,28 +17,8 @@ class Product extends StatefulWidget {
 class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: background,
-      body: GridView.count(
-          crossAxisCount: 2,
-          padding: EdgeInsets.all(16.0),
-          childAspectRatio: 8 / 10,
-          children: _buildGridCards(context) // Changed code
-          ),
-    );
-  }
-}
-
-List<Widget> _buildGridCards(BuildContext context) {
-  List<ProductItem> products = ProductRepository.loadProducts();
-
-  if (products == null || products.isEmpty) {
-    return const <Card>[];
-  }
-
-  return products.map((product) {
     return GestureDetector(
-      onTap: () => _openProductDetails(context, product),
+      onTap: () => _openProductDetails(context, widget.product),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -55,7 +36,7 @@ List<Widget> _buildGridCards(BuildContext context) {
                   aspectRatio: 18 / 11,
                   child: SizedBox(
                     child: Image.network(
-                      product.productImage,
+                      widget.product.productImage,
                       fit: BoxFit.scaleDown,
                     ),
                   ),
@@ -72,14 +53,14 @@ List<Widget> _buildGridCards(BuildContext context) {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Text(
-                        product.productTitle,
+                        widget.product.productTitle,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(fontSize: 14),
                       ),
                       SizedBox(height: 4),
                       Text(
-                        "\$${product.productPrice.toStringAsFixed(2)} MXN",
+                        "\$${widget.product.productPrice.toStringAsFixed(2)} MXN",
                         style: TextStyle(
                           fontFamily: 'Poppins Bold',
                           fontSize: 18,
@@ -95,7 +76,7 @@ List<Widget> _buildGridCards(BuildContext context) {
         ),
       ),
     );
-  }).toList();
+  }
 }
 
 _openProductDetails(BuildContext context, ProductItem product) async {

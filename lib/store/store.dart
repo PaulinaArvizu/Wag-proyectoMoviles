@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
+import 'package:wag_proyecto_moviles/models/product_item.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
 import 'package:wag_proyecto_moviles/models/product_repository.dart';
 import 'package:wag_proyecto_moviles/store/product.dart';
@@ -18,6 +19,7 @@ class Store extends StatefulWidget {
 
 class _StoreState extends State<Store> {
   List<ProductItemCart> productList = new List<ProductItemCart>();
+  List<ProductItem> _products = ProductRepository.loadProducts();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +51,15 @@ class _StoreState extends State<Store> {
               }),
         ],
       ),
-      body: Product(),
+      // body: Product(),
+      backgroundColor: background,
+      body: GridView.count(
+        crossAxisCount: 2,
+        padding: EdgeInsets.all(16.0),
+        childAspectRatio: 8 / 10,
+        children:
+            _products.map((product) => Product(product: product)).toList(),
+      ),
     );
   }
 
