@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
+import 'package:wag_proyecto_moviles/payment.dart';
 import 'package:wag_proyecto_moviles/store/bloc/store_bloc.dart';
 
 import 'item_cart.dart';
@@ -159,7 +160,13 @@ class _CartState extends State<Cart> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return Payment();
+                            }),
+                          );
+                        },
                         color: pagar_background,
                         textColor: Colors.white,
                         child: Text(
