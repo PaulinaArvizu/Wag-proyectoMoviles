@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/profile/sizeConfig.dart';
@@ -42,6 +43,15 @@ class ProfileFirst extends StatefulWidget {
 }
 
 class _ProfileFirstState extends State<ProfileFirst> {
+  FirebaseAuth _auth;
+  User _currentUser;
+  @override
+  void initState() {
+    _auth = FirebaseAuth.instance;
+    _currentUser = _auth.currentUser;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
