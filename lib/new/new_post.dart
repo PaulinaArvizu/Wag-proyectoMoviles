@@ -48,18 +48,46 @@ class _NewPostState extends State<NewPost> {
           listener: (context, state) {
             if (state is NewPostErrorState) {
               //DONE: dialogo o snackbar de error
-              _scaffoldKey.currentState.showSnackBar(
-                SnackBar(
-                  content: Text("Se presentó un error"),
-                ),
-              );
+              _scaffoldKey.currentState
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text("An error occurred"),
+                    action: SnackBarAction(
+                      label: "See more",
+                      onPressed: () => showDialog(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            title: Text("Error"),
+                            content: Text(state.errorMessage ?? ''),
+                            actions: [
+                              FlatButton(
+                                onPressed: () => Navigator.of(_).pop(),
+                                child: Text(
+                                  "ACEPTAR",
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins SemiBold',
+                                    color: primary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                );
             } else if (state is NewPostCreatedState) {
               //DONE: dialogo o snackbar de success
-              _scaffoldKey.currentState.showSnackBar(
-                SnackBar(
-                  content: Text("Success: post creado"),
-                ),
-              );
+              _scaffoldKey.currentState
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text("Success: post created"),
+                  ),
+                );
             } else if (state is ImagenCargadaState) {
               _chosenImage = state.imagen;
             }
@@ -225,7 +253,7 @@ class _NewPostState extends State<NewPost> {
                     size: _sizeController.text,
                     age: _ageController.text,
                     description: _descriptionController.text,
-                    authorID: "123",
+                    authorID: "123", //TODO: accesar al id del usuario
                     contactInfo: _contactInfoController.text,
                   ),
                 );
