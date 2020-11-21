@@ -24,3 +24,5 @@ class ProductRemovedState extends StoreState {}
 class CartUpdatedState extends StoreState {}
 
 class EmptyCartState extends StoreState {}
+
+class StandbyState extends StoreState {}
