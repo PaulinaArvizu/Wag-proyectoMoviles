@@ -82,7 +82,6 @@ class _FeedState extends State<Feed> {
       ),
       body: ListView.builder(
         scrollDirection: Axis.vertical,
-        // padding: EdgeInsets.symmetric(horizontal: 20),
         itemCount: _posts.length,
         itemBuilder: (BuildContext context, int index) {
           return _postFormat(_posts[index]);
@@ -205,36 +204,16 @@ class _FeedState extends State<Feed> {
               )
             ],
           ),
-          Row(
+          ExpansionTile(
+            title: Text(
+              "Descripcion",
+              style: TextStyle(color: Colors.grey),
+            ),
             children: [
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                  //TODO: poner una variable bool para cada post
-                  child: false //expandedText
-                      ? Text(
-                          // "Mucho texto mucho texto mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto ",
-                          post.description ?? '',
-                        )
-                      : Text(
-                          // "Mucho texto mucho texto mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto ",
-                          post.description ?? '',
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
-                        ),
-                ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                child: Text(post.description ?? ''),
               ),
-              IconButton(
-                icon: false //expandedText
-                    ? Icon(Icons.arrow_circle_up)
-                    : Icon(Icons.arrow_circle_down),
-                onPressed: () {
-                  setState(() {
-                    // expandedText = !expandedText;
-                  });
-                },
-              ),
-              SizedBox(width: 20),
             ],
           ),
           SizedBox(height: 30),
