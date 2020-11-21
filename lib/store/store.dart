@@ -35,23 +35,21 @@ class _StoreState extends State<Store> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            onPressed: () {},
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: Search(products: _products),
+              );
+            },
           ),
           IconButton(
-              icon: Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
-              ),
+              icon: Icon(Icons.shopping_cart),
               onPressed: () {
                 _openCartPage();
               }),
         ],
       ),
-      // body: Product(),
       backgroundColor: background,
       body: GridView.count(
         crossAxisCount: 2,
@@ -78,5 +76,69 @@ class _StoreState extends State<Store> {
         );
       }),
     );
+  }
+}
+
+class Search extends SearchDelegate {
+  final List<ProductItem> products;
+
+  Search({@required this.products});
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    //boton que limpie la busqueda
+    return <Widget>[
+      IconButton(
+        icon: Icon(Icons.close),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    //leading icon (a la izquierda del search)
+    return IconButton(
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    List<ProductItem> filteredProducts = [];
+    //busca los resultados
+    query.isEmpty
+        ? filteredProducts = []
+        : filteredProducts = products.where((p) {
+            String title = p.productTitle.toLowerCase();
+            String desc = p.productDescription.toLowerCase();
+            String price = p.productDescription.toString().toLowerCase();
+            String search = query.toLowerCase();
+            return title.contains(search) ||
+                desc.contains(search) ||
+                price.contains(search);
+          }).toList();
+
+    //muestra los resultados
+    return filteredProducts.length == 0
+        ? Center(child: Text('No results'))
+        : GridView.count(
+            crossAxisCount: 2,
+            padding: EdgeInsets.all(16.0),
+            childAspectRatio: 8 / 10,
+            children: filteredProducts
+                .map((product) => Product(product: product))
+                .toList(),
+          );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Center(child: Text(''));
   }
 }
