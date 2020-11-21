@@ -84,7 +84,10 @@ class _ItemCartState extends State<ItemCart> {
                           children: [
                             IconButton(
                               icon: Icon(Icons.remove_circle),
-                              onPressed: _substractAmount,
+                              onPressed: widget.item.productAmount == 1
+                                  ? null
+                                  : _substractAmount,
+                              disabledColor: Colors.grey,
                             ),
                             Text(widget.item.productAmount.toString()),
                             IconButton(
