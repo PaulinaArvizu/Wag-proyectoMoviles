@@ -74,16 +74,20 @@ class _PaymentState extends State<Payment> {
   void _gotoPayment() {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Payment Success!'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text(
-                      'Your payment was successful and your order should be on its way. Thank you for your purchase.'),
-                ],
-              ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                    'Your payment was successful and your order should be on its way. Thank you for your purchase.'),
+                Image.asset(
+                  'assets/images/PaymentSuccess.png',
+                  height: 50,
+                ),
+              ],
             ),
             actions: <Widget>[
               FlatButton(
