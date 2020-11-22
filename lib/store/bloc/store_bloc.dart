@@ -51,6 +51,10 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       _cartBox.put("products", _cartElements);
       yield CartUpdatedState();
       yield StandbyState();
+    } else if (event is PaymentSuccessEvent) {
+      _cartElements.clear();
+      _cartBox.put("products", _cartElements);
+      yield StandbyState();
     }
   }
 }

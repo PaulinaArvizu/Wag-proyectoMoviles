@@ -36,3 +36,5 @@ class RemoveFromCartEvent extends StoreEvent {
   @override
   List<Object> get props => [productIndex];
 }
+
+class PaymentSuccessEvent extends StoreEvent {}

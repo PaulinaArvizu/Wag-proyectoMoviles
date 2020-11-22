@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:wag_proyecto_moviles/colors.dart';
+import 'package:wag_proyecto_moviles/home/home_page.dart';
+import 'package:wag_proyecto_moviles/store/bloc/store_bloc.dart';
 
 enum method { PAYPAL, GIFTCARD, CARD }
 
 class Payment extends StatefulWidget {
-  Payment({Key key}) : super(key: key);
+  final StoreBloc storeBloc;
+  Payment({Key key, @required this.storeBloc}) : super(key: key);
 
   @override
   _PaymentState createState() => _PaymentState();
@@ -13,14 +17,13 @@ class _PaymentState extends State<Payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: background,
       appBar: AppBar(
-        title: Text('Pagos'),
+        title: Text('Choose payment method'),
+        backgroundColor: primary,
       ),
       body: ListView(
         children: <Widget>[
-          Container(
-            child: Text('Elige tu metodo de pago'),
-          ),
           const SizedBox(
             height: 60,
           ),
@@ -31,27 +34,34 @@ class _PaymentState extends State<Payment> {
                 onPressed: () {
                   _gotoPayment();
                 },
-                child: Text('Tarjeta credito/debito',
-                    style: TextStyle(fontSize: 20)),
+                color: primary,
+                child: Text('Credit/Debit card',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    )),
               ),
               const SizedBox(height: 30),
               RaisedButton(
                 onPressed: () {
                   _gotoPayment();
                 },
-                child: const Text('GiftCard', style: TextStyle(fontSize: 20)),
+                color: primary,
+                child: const Text('GiftCard',
+                    style: TextStyle(fontSize: 20, color: Colors.white)),
               ),
               const SizedBox(height: 30),
               RaisedButton(
                 onPressed: () {
                   _gotoPayment();
                 },
-                textColor: Colors.white,
+                color: primary,
                 padding: const EdgeInsets.all(0.0),
                 child: Container(
                   decoration: const BoxDecoration(),
                   padding: const EdgeInsets.all(10.0),
-                  child: const Text('Paypal', style: TextStyle(fontSize: 20)),
+                  child: const Text('Paypal',
+                      style: TextStyle(fontSize: 20, color: Colors.white)),
                 ),
               ),
             ],
@@ -66,21 +76,22 @@ class _PaymentState extends State<Payment> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Orden Exitosa!'),
+            title: Text('Payment Success!'),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   Text(
-                      'Tu orden ha sido registrada, para mas informacion busca en la opcion historial de compras en tu perfil'),
+                      'Your payment was successful and your order should be on its way. Thank you for your purchase.'),
                 ],
               ),
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('Aceptar'),
+                child: Text('Confirm and Go to Home page'),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
+                  widget.storeBloc.add(PaymentSuccessEvent());
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                      builder: (BuildContext context) => HomePage()));
                 },
               ),
             ],

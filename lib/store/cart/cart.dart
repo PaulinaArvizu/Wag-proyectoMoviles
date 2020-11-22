@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
-import 'package:wag_proyecto_moviles/payment.dart';
+import 'package:wag_proyecto_moviles/store/cart/payment.dart';
 import 'package:wag_proyecto_moviles/store/bloc/store_bloc.dart';
 
 import 'item_cart.dart';
-// import 'package:wag_proyecto_moviles/payment.dart';
 
 class Cart extends StatefulWidget {
   final List<ProductItemCart> productsList;
@@ -163,7 +162,9 @@ class _CartState extends State<Cart> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) {
-                              return Payment();
+                              return Payment(
+                                storeBloc: _storeBloc,
+                              );
                             }),
                           );
                         },
