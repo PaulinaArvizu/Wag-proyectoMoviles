@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wag_proyecto_moviles/new/bloc/new_post_bloc.dart';
+import 'package:wag_proyecto_moviles/profile/bloc/profile_bloc.dart';
 
 import '../colors.dart';
 
@@ -21,7 +21,7 @@ class _EditPostState extends State<EditPost> {
   TextEditingController _contactInfoController = TextEditingController();
 
   File _chosenImage;
-  NewPostBloc _bloc;
+  ProfileBloc _bloc;
   var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -41,12 +41,12 @@ class _EditPostState extends State<EditPost> {
       ),
       body: BlocProvider(
         create: (context) {
-          _bloc = NewPostBloc();
+          _bloc = ProfileBloc();
           return _bloc..add(LeerPostsEvent());
         },
-        child: BlocConsumer<NewPostBloc, NewPostState>(
+        child: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
-            if (state is NewPostErrorState) {
+            if (state is EditPostErrorState) {
               //DONE: dialogo o snackbar de error
               _scaffoldKey.currentState
                 ..hideCurrentSnackBar()
@@ -79,7 +79,7 @@ class _EditPostState extends State<EditPost> {
                     ),
                   ),
                 );
-            } else if (state is NewPostCreatedState) {
+            } else if (state is EditPostUpdatedState) {
               //DONE: dialogo o snackbar de success
               _scaffoldKey.currentState
                 ..hideCurrentSnackBar()
@@ -88,12 +88,12 @@ class _EditPostState extends State<EditPost> {
                     content: Text("Success: post created"),
                   ),
                 );
-            } else if (state is ImagenCargadaState) {
-              _chosenImage = state.imagen;
+            } else if (state is ImageLoadState) {
+              _chosenImage = state.image;
             }
           },
           builder: (context, state) {
-            if (state is NewPostCreatedState) {
+            if (state is EditPostUpdatedState) {
               _clearForm();
               return _newPostForm();
             }
@@ -131,13 +131,13 @@ class _EditPostState extends State<EditPost> {
                 IconButton(
                   icon: Icon(Icons.add_a_photo),
                   onPressed: () {
-                    _bloc.add(CargarImagenEvent(takePictureFromCamera: true));
+                    _bloc.add(LoadImageEvent(takePictureFromCamara: true));
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.add_photo_alternate_outlined),
                   onPressed: () {
-                    _bloc.add(CargarImagenEvent(takePictureFromCamera: false));
+                    _bloc.add(LoadImageEvent(takePictureFromCamara: false));
                   },
                 ),
               ],
@@ -248,7 +248,7 @@ class _EditPostState extends State<EditPost> {
                   side: BorderSide(color: primary)),
               onPressed: () {
                 _bloc.add(
-                  CreateNewPostEvent(
+                  EditPostEvent(
                     name: _nameController.text,
                     size: _sizeController.text,
                     age: _ageController.text,
