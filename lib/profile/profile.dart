@@ -81,7 +81,7 @@ class _ProfileFirstState extends State<ProfileFirst> {
                             fit: BoxFit.contain,
                             image: _currentUser.photoURL == null
                                 ? AssetImage("assets/images/userAvatar.png")
-                                : Image.network(_currentUser.photoURL),
+                                : NetworkImage(_currentUser.photoURL),
                           ),
                         ),
                       ),
