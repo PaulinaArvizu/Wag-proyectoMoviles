@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/profile/sizeConfig.dart';
 
+import 'editPost.dart';
 import 'editProfile.dart';
 
 void main() => runApp(Profile());
@@ -184,6 +185,9 @@ class _ProfileFirstState extends State<ProfileFirst> {
                           padding: EdgeInsets.all(16.0),
                           children: [
                             GestureDetector(
+                              onTap: () {
+                                _openEditPost();
+                              },
                               child: Row(
                                 children: <Widget>[
                                   ClipRRect(
@@ -325,6 +329,14 @@ class _ProfileFirstState extends State<ProfileFirst> {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
         return EditProfile();
+      }),
+    );
+  }
+
+  void _openEditPost() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) {
+        return EditPost();
       }),
     );
   }
