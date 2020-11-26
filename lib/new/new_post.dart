@@ -253,7 +253,6 @@ class _NewPostState extends State<NewPost> {
                     size: _sizeController.text,
                     age: _ageController.text,
                     description: _descriptionController.text,
-                    authorID: "123", //TODO: accesar al id del usuario
                     contactInfo: _contactInfoController.text,
                   ),
                 );

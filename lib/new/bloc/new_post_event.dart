@@ -12,7 +12,6 @@ class CreateNewPostEvent extends NewPostEvent {
   final String size;
   final String age;
   final String description;
-  final String authorID;
   final String contactInfo;
 
   CreateNewPostEvent({
@@ -20,12 +19,17 @@ class CreateNewPostEvent extends NewPostEvent {
     @required this.size,
     @required this.age,
     @required this.description,
-    @required this.authorID,
     @required this.contactInfo,
   });
 
   @override
-  List<Object> get props => [name, size, age, description];
+  List<Object> get props => [
+        name,
+        size,
+        age,
+        description,
+        contactInfo,
+      ];
 }
 
 class CargarImagenEvent extends NewPostEvent {
