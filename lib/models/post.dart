@@ -7,6 +7,8 @@ class Post {
   final String age;
   final String description;
   final String authorID;
+  final String authorUsername;
+  final String authorImageUrl;
   final String date;
   final String contactInfo;
 
@@ -17,6 +19,8 @@ class Post {
     @required this.age,
     @required this.description,
     @required this.authorID,
+    @required this.authorUsername,
+    @required this.authorImageUrl,
     @required this.date,
     @required this.contactInfo,
   });

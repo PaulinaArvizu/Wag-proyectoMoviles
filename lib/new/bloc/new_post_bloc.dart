@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,8 +16,8 @@ part 'new_post_state.dart';
 
 class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
   List<Post> _postsList;
-  // List<Post> get _listaPosts => _postsList;
   File _chosenImage;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   NewPostBloc() : super(NewPostInitial());
 
@@ -44,7 +45,6 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
           event.size,
           event.age,
           event.description,
-          event.authorID,
           imageUrl,
           event.contactInfo,
         );
@@ -68,7 +68,9 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
             imageUrl: element["imageUrl"],
             age: element["age"],
             description: element["description"],
-            authorID: element["authorID"],
+            authorID: element["authorId"],
+            authorUsername: element["authorUsername"],
+            authorImageUrl: element["authorImageUrl"],
             date: element["date"],
             contactInfo: element["contactInfo"],
           ),
@@ -83,7 +85,6 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
     String size,
     String age,
     String description,
-    String authorID,
     String imageUrl,
     String contactInfo,
   ) async {
@@ -94,7 +95,9 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
       "imageUrl": imageUrl,
       "age": age,
       "description": description,
-      "authorID": authorID,
+      "authorID": _auth.currentUser.uid,
+      "authorUsername": _auth.currentUser.displayName,
+      "authorImageUrl": _auth.currentUser.photoURL,
       "date": DateTime.now().toString(),
       "contactInfo": contactInfo
     });
