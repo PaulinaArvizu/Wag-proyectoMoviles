@@ -76,11 +76,14 @@ class _ProfileFirstState extends State<ProfileFirst> {
                         height: 11 * SizeConfig.heightMultiplier,
                         width: 22 * SizeConfig.widthMultiplier,
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image:
-                                    AssetImage("assets/images/cassie.jpeg"))),
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: _currentUser.photoURL == null
+                                ? AssetImage("assets/images/userAvatar.png")
+                                : Image.network(_currentUser.photoURL),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         width: 5 * SizeConfig.widthMultiplier,
@@ -89,7 +92,7 @@ class _ProfileFirstState extends State<ProfileFirst> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Cassie Donk",
+                            _currentUser.displayName ?? "No username",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 3 * SizeConfig.textMultiplier,
