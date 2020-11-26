@@ -78,7 +78,7 @@ class _ProfileFirstState extends State<ProfileFirst> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                             image: _currentUser.photoURL == null
                                 ? AssetImage("assets/images/userAvatar.png")
                                 : Image.network(_currentUser.photoURL),
