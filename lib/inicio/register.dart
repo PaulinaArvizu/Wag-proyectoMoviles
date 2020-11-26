@@ -14,6 +14,10 @@ class _RegisterState extends State<Register> {
   LoginBloc _loginBloc;
   bool _showLoading = false;
   bool _obscureText = true;
+  bool _disabledButton = true;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +43,7 @@ class _RegisterState extends State<Register> {
                       actions: [
                         FlatButton(
                           onPressed: () {
-                            Navigator.of(context).pop();
+                            Navigator.of(_).pop();
                           },
                           child: Text("OK"),
                         )
@@ -88,7 +92,16 @@ class _RegisterState extends State<Register> {
                       alignment: Alignment.center,
                       padding: EdgeInsets.symmetric(vertical: 20),
                       child: TextFormField(
-                        controller: null,
+                        controller: _emailController,
+                        onChanged: (value) {
+                          setState(() {
+                            _disabledButton = (_emailController.text.isEmpty ||
+                                    _passwordController.text.isEmpty ||
+                                    _confirmPasswordController.text.isEmpty) ||
+                                (_passwordController.text !=
+                                    _confirmPasswordController.text);
+                          });
+                        },
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -122,7 +135,16 @@ class _RegisterState extends State<Register> {
                       alignment: Alignment.center,
                       padding: EdgeInsets.only(bottom: 20),
                       child: TextFormField(
-                        controller: null,
+                        controller: _passwordController,
+                        onChanged: (value) {
+                          setState(() {
+                            _disabledButton = (_emailController.text.isEmpty ||
+                                    _passwordController.text.isEmpty ||
+                                    _confirmPasswordController.text.isEmpty) ||
+                                (_passwordController.text !=
+                                    _confirmPasswordController.text);
+                          });
+                        },
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -175,7 +197,16 @@ class _RegisterState extends State<Register> {
                       alignment: Alignment.center,
                       padding: EdgeInsets.only(bottom: 20),
                       child: TextFormField(
-                        controller: null,
+                        controller: _confirmPasswordController,
+                        onChanged: (value) {
+                          setState(() {
+                            _disabledButton = (_emailController.text.isEmpty ||
+                                    _passwordController.text.isEmpty ||
+                                    _confirmPasswordController.text.isEmpty) ||
+                                (_passwordController.text !=
+                                    _confirmPasswordController.text);
+                          });
+                        },
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -233,10 +264,21 @@ class _RegisterState extends State<Register> {
                           padding: EdgeInsets.all(20),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
-                              side: BorderSide(color: primary)),
-                          onPressed: () {},
+                              side: BorderSide(
+                                color: _disabledButton ? Colors.grey : primary,
+                              )),
+                          onPressed: _disabledButton
+                              ? null
+                              : () {
+                                  _loginBloc.add(SignUpWithEmailEvent(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  ));
+                                },
                           color: primary,
                           textColor: Colors.white,
+                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.white,
                           child: Text("SIGN UP",
                               style: TextStyle(
                                 fontFamily: 'Poppins SemiBold',

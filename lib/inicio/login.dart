@@ -14,6 +14,9 @@ class _LogInState extends State<LogIn> {
   LoginBloc _loginBloc;
   bool _showLoading = false;
   bool _obscureText = true;
+  bool _disabledButton = true;
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +41,7 @@ class _LogInState extends State<LogIn> {
                       content: Text("${state.error}"),
                       actions: [
                         FlatButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
+                          onPressed: () => Navigator.of(_).pop(),
                           child: Text("OK"),
                         )
                       ],
@@ -88,7 +89,13 @@ class _LogInState extends State<LogIn> {
                       alignment: Alignment.center,
                       padding: EdgeInsets.symmetric(vertical: 20),
                       child: TextFormField(
-                        controller: null,
+                        controller: _emailController,
+                        onChanged: (value) {
+                          setState(() {
+                            _disabledButton = _emailController.text.isEmpty ||
+                                _passwordController.text.isEmpty;
+                          });
+                        },
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
@@ -122,7 +129,13 @@ class _LogInState extends State<LogIn> {
                       alignment: Alignment.center,
                       padding: EdgeInsets.only(bottom: 20),
                       child: TextFormField(
-                        controller: null,
+                        controller: _passwordController,
+                        onChanged: (value) {
+                          setState(() {
+                            _disabledButton = _emailController.text.isEmpty ||
+                                _passwordController.text.isEmpty;
+                          });
+                        },
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -189,10 +202,21 @@ class _LogInState extends State<LogIn> {
                           padding: EdgeInsets.all(20),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
-                              side: BorderSide(color: primary)),
-                          onPressed: () {},
+                              side: BorderSide(
+                                color: _disabledButton ? Colors.grey : primary,
+                              )),
+                          onPressed: _disabledButton
+                              ? null
+                              : () {
+                                  _loginBloc.add(LoginWithEmailEvent(
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  ));
+                                },
                           color: primary,
                           textColor: Colors.white,
+                          disabledColor: Colors.grey,
+                          disabledTextColor: Colors.white,
                           child: Text(
                             "LOGIN",
                             style: TextStyle(
