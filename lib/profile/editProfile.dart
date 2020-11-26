@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../colors.dart';
@@ -14,6 +13,14 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   TextEditingController _nameController = TextEditingController();
   var _scaffoldKey = GlobalKey<ScaffoldState>();
+  FirebaseAuth _auth;
+  User _currentUser;
+  @override
+  void initState() {
+    _auth = FirebaseAuth.instance;
+    _currentUser = _auth.currentUser;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +45,9 @@ class _EditProfileState extends State<EditProfile> {
             child: SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  Image.asset(
-                    'assets/images/cassie.jpeg', //Cambiar asset por imagen de perfil
-                    width: 150,
-                    height: 150,
-                    //Cargar imagen elegida.
-                  ),
+                  _currentUser.photoURL == null
+                      ? AssetImage("assets/images/userAvatar.png")
+                      : Image.network(_currentUser.photoURL),
                   SizedBox(height: 48),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
