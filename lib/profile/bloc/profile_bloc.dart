@@ -62,7 +62,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     // agregar cada ojeto a una lista
     var misPosts = await FirebaseFirestore.instance
         .collection("posts")
-        .orderBy("date", descending: true)
         .where("authorID", isEqualTo: _auth.currentUser.uid)
         .get();
     _postsList = misPosts.docs
