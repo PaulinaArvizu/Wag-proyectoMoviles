@@ -3,10 +3,9 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/rendering.dart';
-import 'package:wag_proyecto_moviles/new/bloc/new_post_bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
@@ -18,6 +17,7 @@ part 'profile_state.dart';
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   List<Post> _postsList;
   File _chosenImage;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   ProfileBloc() : super(ProfileInitial());
 
@@ -27,7 +27,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ) async* {
     if (event is LeerPostsEvent) {
       try {
-        await _getAllPosts();
+        await _getAllUserPosts();
         yield EditPostSuccessState();
       } catch (e) {
         yield EditPostErrorState(errorMessage: "Couldn't get posts: \n$e");
@@ -45,7 +45,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           event.size,
           event.age,
           event.description,
-          event.authorID,
           imageUrl,
           event.contactInfo,
         );
@@ -56,12 +55,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  Future _getAllPosts() async {
+  Future _getAllUserPosts() async {
     // recuperar lista de docs guardados en Cloud firestore
     // mapear a objeto de dart (Post)
     // agregar cada ojeto a una lista
     var misPosts = await FirebaseFirestore.instance.collection("posts").get();
-    _postsList = misPosts.docs
+    List<Post> allPosts = misPosts.docs
         .map(
           (element) => Post(
             name: element["name"],
@@ -70,11 +69,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             age: element["age"],
             description: element["description"],
             authorID: element["authorID"],
+            authorUsername: element["authorUsername"],
+            authorImageUrl: element["authorImageUrl"],
             date: element["date"],
             contactInfo: element["contactInfo"],
           ),
         )
         .toList();
+
+    _postsList = allPosts
+        .where((post) => post.authorID == _auth.currentUser.uid)
+        .toList();
+
     print(_postsList);
   }
 
@@ -84,7 +90,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     String size,
     String age,
     String description,
-    String authorID,
     String imageUrl,
     String contactInfo,
   ) async {
@@ -95,7 +100,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       "imageUrl": imageUrl,
       "age": age,
       "description": description,
-      "authorID": authorID,
+      "authorID": _auth.currentUser.uid,
+      "authorUsername": _auth.currentUser.displayName,
+      "authorImageUrl": _auth.currentUser.photoURL,
       "date": DateTime.now().toString(),
       "contactInfo": contactInfo
     });
