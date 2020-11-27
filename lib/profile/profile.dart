@@ -36,7 +36,7 @@ class _ProfileState extends State<Profile> {
         body: BlocProvider(
           create: (context) {
             _bloc = ProfileBloc();
-            return _bloc.add(LeerPostsEvent());
+            return _bloc..add(LeerPostsEvent());
           },
           child: BlocConsumer<ProfileBloc, ProfileState>(
             listener: (context, state) {},
