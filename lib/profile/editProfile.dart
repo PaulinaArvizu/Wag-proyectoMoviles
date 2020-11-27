@@ -15,10 +15,12 @@ class _EditProfileState extends State<EditProfile> {
   var _scaffoldKey = GlobalKey<ScaffoldState>();
   FirebaseAuth _auth;
   User _currentUser;
+
   @override
   void initState() {
     _auth = FirebaseAuth.instance;
     _currentUser = _auth.currentUser;
+    _nameController.text = _currentUser.displayName;
     super.initState();
   }
 
@@ -65,6 +67,7 @@ class _EditProfileState extends State<EditProfile> {
                   SizedBox(height: 48),
                   //TODO:preguntar text field se velve loco
                   TextField(
+                    controller: _nameController,
                     decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Color(0xffE2E2E2)),
@@ -76,7 +79,6 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                       fillColor: Colors.white,
                       filled: true,
-                      hintText: "Cassie Donk",
                       hintStyle: TextStyle(color: Colors.grey),
                     ),
                     style: TextStyle(fontFamily: 'Poppins Regular'),

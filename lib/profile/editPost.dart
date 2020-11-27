@@ -2,12 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:wag_proyecto_moviles/profile/bloc/profile_bloc.dart';
 
 import '../colors.dart';
 
 class EditPost extends StatefulWidget {
-  EditPost({Key key}) : super(key: key);
+  final Post post;
+  EditPost({Key key, @required this.post}) : super(key: key);
 
   @override
   _EditPostState createState() => _EditPostState();
@@ -22,7 +24,19 @@ class _EditPostState extends State<EditPost> {
 
   File _chosenImage;
   ProfileBloc _bloc;
+  String _currentImage;
   var _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    _nameController.text = widget.post.name;
+    _sizeController.text = widget.post.size;
+    _ageController.text = widget.post.age;
+    _descriptionController.text = widget.post.description;
+    _contactInfoController.text = widget.post.contactInfo;
+    _currentImage = widget.post.imageUrl;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,13 +130,10 @@ class _EditPostState extends State<EditPost> {
                     width: 150,
                     height: 150,
                   )
-                : Container(
-                    height: 150,
+                : Image.network(
+                    _currentImage,
                     width: 150,
-                    child: Placeholder(
-                      fallbackHeight: 150,
-                      fallbackWidth: 150,
-                    ),
+                    height: 150,
                   ),
             SizedBox(height: 48),
             Row(
