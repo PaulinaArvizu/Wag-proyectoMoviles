@@ -59,8 +59,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     // recuperar lista de docs guardados en Cloud firestore
     // mapear a objeto de dart (Post)
     // agregar cada ojeto a una lista
-    var misPosts = await FirebaseFirestore.instance.collection("posts").get();
-    List<Post> allPosts = misPosts.docs
+    var misPosts = await FirebaseFirestore.instance
+        .collection("posts")
+        .orderBy("date", descending: true)
+        .where("authorID", isEqualTo: _auth.currentUser.uid)
+        .get();
+    _postsList = misPosts.docs
         .map(
           (element) => Post(
             name: element["name"],
@@ -76,11 +80,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ),
         )
         .toList();
-
-    _postsList = allPosts
-        .where((post) => post.authorID == _auth.currentUser.uid)
-        .toList();
-
     print(_postsList);
   }
 
