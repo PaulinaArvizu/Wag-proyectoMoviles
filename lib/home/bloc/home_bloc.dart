@@ -31,7 +31,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     // recuperar lista de docs guardados en Cloud firestore
     // mapear a objeto de dart (Post)
     // agregar cada ojeto a una lista
-    var misPosts = await FirebaseFirestore.instance.collection("posts").get();
+    var misPosts = await FirebaseFirestore.instance
+        .collection("posts")
+        .orderBy("date", descending: true)
+        .get();
     _postsList = misPosts.docs
         .map(
           (element) => Post(
