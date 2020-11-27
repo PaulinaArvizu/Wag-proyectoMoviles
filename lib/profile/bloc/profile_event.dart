@@ -12,7 +12,6 @@ class EditPostEvent extends ProfileEvent {
   final String size;
   final String age;
   final String description;
-  final String authorID;
   final String contactInfo;
 
   EditPostEvent({
@@ -20,12 +19,17 @@ class EditPostEvent extends ProfileEvent {
     @required this.size,
     @required this.age,
     @required this.description,
-    @required this.authorID,
     @required this.contactInfo,
   });
 
   @override
-  List<Object> get props => [name, size, age, description];
+  List<Object> get props => [
+        name,
+        size,
+        age,
+        description,
+        contactInfo,
+      ];
 }
 
 class LoadImageEvent extends ProfileEvent {
