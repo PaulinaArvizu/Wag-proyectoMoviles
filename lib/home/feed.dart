@@ -19,6 +19,8 @@ class _FeedState extends State<Feed> {
       description:
           'Mucho texto mucho texto mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto ',
       authorID: null,
+      authorUsername: "test1",
+      authorImageUrl: null,
       date: null,
       contactInfo: 'Holis',
     ),
@@ -30,6 +32,8 @@ class _FeedState extends State<Feed> {
       description:
           'Mucho texto mucho texto mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto ',
       authorID: null,
+      authorUsername: "test2",
+      authorImageUrl: null,
       date: null,
       contactInfo: 'jelou',
     ),
@@ -107,13 +111,13 @@ class _FeedState extends State<Feed> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage("assets/images/cassie.jpeg"),
+                    image: AssetImage("assets/images/userAvatar.png"),
                   ),
                 ),
               ),
               SizedBox(width: 10),
               Text(
-                "Cassie Donk",
+                post.authorUsername ?? "No username",
                 style: TextStyle(
                   fontFamily: "Proxima Nova Bold",
                   fontSize: 20,
@@ -121,7 +125,7 @@ class _FeedState extends State<Feed> {
               ),
             ],
           ),
-          SizedBox(height: 22),
+          SizedBox(height: 10),
           SizedBox(
             height: 247,
             child: Image.asset(
@@ -206,7 +210,7 @@ class _FeedState extends State<Feed> {
           ),
           ExpansionTile(
             title: Text(
-              "Descripcion",
+              "Description",
               style: TextStyle(color: Colors.grey),
             ),
             children: [
@@ -243,7 +247,7 @@ class _FeedState extends State<Feed> {
             FlatButton(
               onPressed: () => Navigator.of(_).pop(),
               child: Text(
-                "ACEPTAR",
+                "OK",
                 style: TextStyle(
                   fontFamily: 'Poppins SemiBold',
                   color: primary,
