@@ -278,6 +278,8 @@ class _NewPostState extends State<NewPost> {
     _nameController.clear();
     _sizeController.clear();
     _ageController.clear();
+    _descriptionController.clear();
+    _contactInfoController.clear();
     _chosenImage = null;
   }
 }
