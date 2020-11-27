@@ -18,7 +18,6 @@ class ProductDetail extends StatefulWidget {
 }
 
 class _ProductDetailState extends State<ProductDetail> {
-  bool expandedText = false;
   StoreBloc _storeBloc;
   var _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
@@ -87,42 +86,15 @@ class _ProductDetailState extends State<ProductDetail> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 25),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  SizedBox(height: 10),
+                  ExpansionTile(
+                    title: Text('Description'),
                     children: [
-                      Expanded(
-                        flex: 5,
-                        child: Container(
-                          margin: EdgeInsets.only(left: 30),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: expandedText
-                                ? Text(
-                                    widget.product.productDescription,
-                                    style: TextStyle(fontSize: 18),
-                                  )
-                                : Text(
-                                    widget.product.productDescription,
-                                    style: TextStyle(fontSize: 18),
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                          ),
-                        ),
+                      Text(
+                        widget.product.productDescription,
+                        style: TextStyle(fontSize: 18),
                       ),
-                      Expanded(
-                        child: IconButton(
-                          icon: expandedText
-                              ? Icon(Icons.arrow_circle_up)
-                              : Icon(Icons.arrow_circle_down),
-                          onPressed: () {
-                            setState(() {
-                              expandedText = !expandedText;
-                            });
-                          },
-                        ),
-                      ),
+                      SizedBox(height: 10),
                     ],
                   ),
                   Container(
