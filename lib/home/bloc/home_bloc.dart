@@ -20,7 +20,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (event is LeerPostsEvent) {
       try {
         await _getAllPosts();
-        yield HomeSuccessState();
+        yield HomeSuccessState(postList: _postsList);
       } catch (e) {
         yield HomeErrorState(errorMessage: "Couldn't get posts: \n$e");
       }
@@ -51,6 +51,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           ),
         )
         .toList();
-    print(_postsList);
   }
 }
