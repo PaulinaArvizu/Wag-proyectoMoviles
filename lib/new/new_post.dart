@@ -65,7 +65,7 @@ class _NewPostState extends State<NewPost> {
                               FlatButton(
                                 onPressed: () => Navigator.of(_).pop(),
                                 child: Text(
-                                  "ACEPTAR",
+                                  "OK",
                                   style: TextStyle(
                                     fontFamily: 'Poppins SemiBold',
                                     color: primary,
@@ -124,7 +124,7 @@ class _NewPostState extends State<NewPost> {
                       fallbackWidth: 150,
                     ),
                   ),
-            SizedBox(height: 48),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -142,7 +142,7 @@ class _NewPostState extends State<NewPost> {
                 ),
               ],
             ),
-            SizedBox(height: 48),
+            SizedBox(height: 20),
             TextField(
               controller: _nameController,
               decoration: InputDecoration(
@@ -175,7 +175,7 @@ class _NewPostState extends State<NewPost> {
                 ),
                 fillColor: Colors.white,
                 filled: true,
-                hintText: "Size",
+                hintText: "Size *",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
@@ -214,7 +214,7 @@ class _NewPostState extends State<NewPost> {
                 ),
                 fillColor: Colors.white,
                 filled: true,
-                hintText: "Description",
+                hintText: "Description & location *",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
@@ -234,10 +234,19 @@ class _NewPostState extends State<NewPost> {
                 ),
                 fillColor: Colors.white,
                 filled: true,
-                hintText: "Contact Information",
+                hintText: "Contact Information *",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
+            ),
+            SizedBox(height: 5),
+            Row(
+              children: [
+                Text(
+                  "(*) Required fields",
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
             ),
             SizedBox(height: 24),
             FlatButton(
@@ -247,15 +256,55 @@ class _NewPostState extends State<NewPost> {
                   borderRadius: BorderRadius.circular(10),
                   side: BorderSide(color: primary)),
               onPressed: () {
-                _bloc.add(
-                  CreateNewPostEvent(
-                    name: _nameController.text,
-                    size: _sizeController.text,
-                    age: _ageController.text,
-                    description: _descriptionController.text,
-                    contactInfo: _contactInfoController.text,
-                  ),
-                );
+                String missingFields = _missingFields();
+                if (missingFields.isNotEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Row(
+                          children: [
+                            Image.asset(
+                              'assets/images/EmptyCart.png',
+                              height: 35,
+                            ),
+                            SizedBox(width: 10),
+                            Text("Wait!"),
+                          ],
+                        ),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text("Please fill the required fields"),
+                            Text(missingFields),
+                          ],
+                        ),
+                        actions: [
+                          FlatButton(
+                            onPressed: () => Navigator.of(_).pop(),
+                            child: Text(
+                              "OK",
+                              style: TextStyle(
+                                fontFamily: 'Poppins SemiBold',
+                                color: primary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  _bloc.add(
+                    CreateNewPostEvent(
+                      name: _nameController.text,
+                      size: _sizeController.text,
+                      age: _ageController.text,
+                      description: _descriptionController.text,
+                      contactInfo: _contactInfoController.text,
+                    ),
+                  );
+                }
               },
               color: primary,
               textColor: Colors.white,
@@ -281,5 +330,27 @@ class _NewPostState extends State<NewPost> {
     _descriptionController.clear();
     _contactInfoController.clear();
     _chosenImage = null;
+  }
+
+  String _missingFields() {
+    String missingFields = "";
+    //verificar que no haya campos vacios
+    if (_chosenImage == null) {
+      missingFields += "- Image\n";
+    }
+
+    if (_sizeController.text.isEmpty) {
+      missingFields += "- Size\n";
+    }
+
+    if (_descriptionController.text.isEmpty) {
+      missingFields += "- Description & location\n";
+    }
+
+    if (_contactInfoController.text.isEmpty) {
+      missingFields += "- Contact Information\n";
+    }
+
+    return missingFields;
   }
 }
