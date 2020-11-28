@@ -167,72 +167,83 @@ class _FeedState extends State<Feed> {
           Row(
             children: [
               SizedBox(width: 25),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Name:",
-                    style: TextStyle(
-                      fontFamily: "Poppins Bold",
-                      color: primary,
-                      fontSize: 16,
+              Expanded(
+                flex: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Name:",
+                      style: TextStyle(
+                        fontFamily: "Poppins Bold",
+                        color: primary,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "Size:",
-                    style: TextStyle(
-                      fontFamily: "Poppins Bold",
-                      color: primary,
-                      fontSize: 16,
+                    Text(
+                      "Size:",
+                      style: TextStyle(
+                        fontFamily: "Poppins Bold",
+                        color: primary,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "Age (aprox.):",
-                    style: TextStyle(
-                      fontFamily: "Poppins Bold",
-                      color: primary,
-                      fontSize: 16,
+                    Text(
+                      "Age (aprox.):",
+                      style: TextStyle(
+                        fontFamily: "Poppins Bold",
+                        color: primary,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(width: 15),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    post.name ?? '',
-                    style: TextStyle(
-                      fontFamily: "Poppins Regular",
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    post.size ?? '',
-                    style: TextStyle(
-                      fontFamily: "Poppins Regular",
-                      fontSize: 16,
-                    ),
-                  ),
-                  Text(
-                    post.age ?? '',
-                    style: TextStyle(
-                      fontFamily: "Poppins Regular",
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(width: 125),
-              IconButton(
-                icon: Icon(
-                  Icons.info_outline,
-                  color: Colors.black,
-                  size: 25,
+                  ],
                 ),
-                onPressed: () {
-                  _openDialog(post.contactInfo);
-                },
+              ),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      post.name ?? '',
+                      style: TextStyle(
+                        fontFamily: "Poppins Regular",
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      post.size ?? '',
+                      style: TextStyle(
+                        fontFamily: "Poppins Regular",
+                        fontSize: 16,
+                      ),
+                    ),
+                    Text(
+                      post.age ?? '',
+                      style: TextStyle(
+                        fontFamily: "Poppins Regular",
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // SizedBox(width: 100),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.info_outline,
+                      color: Colors.black,
+                      size: 25,
+                    ),
+                    onPressed: () {
+                      _openDialog(post.contactInfo);
+                    },
+                  ),
+                ),
               )
             ],
           ),
