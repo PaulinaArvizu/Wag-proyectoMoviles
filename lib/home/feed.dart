@@ -336,11 +336,13 @@ class Search extends SearchDelegate {
             String size = p.size.toLowerCase();
             String age = p.age.toLowerCase();
             String desc = p.description.toLowerCase();
+            String author = p.authorUsername.toLowerCase();
             String search = query.toLowerCase();
             return name.contains(search) ||
                 size.contains(search) ||
                 age.contains(search) ||
-                desc.contains(search);
+                desc.contains(search) ||
+                author.contains(search);
           }).toList();
 
     //muestra los resultados
