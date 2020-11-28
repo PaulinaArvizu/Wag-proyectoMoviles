@@ -98,7 +98,7 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
       "authorID": _auth.currentUser.uid,
       "authorUsername": _auth.currentUser.displayName,
       "authorImageUrl": _auth.currentUser.photoURL,
-      "date": DateTime.now().toString(),
+      "date": DateTime.now().toString().split(".")[0],
       "contactInfo": contactInfo
     });
   }
