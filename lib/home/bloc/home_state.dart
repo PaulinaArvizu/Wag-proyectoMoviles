@@ -9,7 +9,13 @@ abstract class HomeState extends Equatable {
 
 class HomeInitial extends HomeState {}
 
-class HomeSuccessState extends HomeState {}
+class HomeSuccessState extends HomeState {
+  final List<Post> postList;
+
+  HomeSuccessState({@required this.postList});
+  @override
+  List<Object> get props => [postList];
+}
 
 class HomeErrorState extends HomeState {
   final String errorMessage;
