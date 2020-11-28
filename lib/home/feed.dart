@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
+import 'package:wag_proyecto_moviles/home/bloc/home_bloc.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
+import 'package:intl/intl.dart';
 
 class Feed extends StatefulWidget {
   Feed({Key key}) : super(key: key);
@@ -10,34 +13,8 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
-  List<Post> _posts = [
-    Post(
-      name: 'Perritu',
-      size: 'Grande',
-      imageUrl: '',
-      age: '3 años',
-      description:
-          'Mucho texto mucho texto mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto ',
-      authorID: null,
-      authorUsername: "test1",
-      authorImageUrl: null,
-      date: null,
-      contactInfo: 'Holis',
-    ),
-    Post(
-      name: 'Hola',
-      size: 'adios',
-      imageUrl: '',
-      age: '1 años',
-      description:
-          'Mucho texto mucho texto mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto  mucho texto ',
-      authorID: null,
-      authorUsername: "test2",
-      authorImageUrl: null,
-      date: null,
-      contactInfo: 'jelou',
-    ),
-  ];
+  HomeBloc _homeBloc;
+  List<Post> _posts = [];
 
   @override
   Widget build(BuildContext context) {
@@ -84,17 +61,64 @@ class _FeedState extends State<Feed> {
           ),
         ],
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: _posts.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _postFormat(_posts[index]);
+      body: BlocProvider(
+        create: (context) {
+          _homeBloc = HomeBloc();
+          return _homeBloc..add(LeerPostsEvent());
         },
+        child: BlocConsumer<HomeBloc, HomeState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is HomeSuccessState) {
+              _posts = state.postList;
+              return RefreshIndicator(
+                onRefresh: () async {
+                  _homeBloc..add(LeerPostsEvent());
+                  return Future.delayed(Duration(seconds: 1));
+                },
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: _posts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _postFormat(_posts[index]);
+                  },
+                ),
+              );
+            }
+            if (state is HomeErrorState) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  _homeBloc..add(LeerPostsEvent());
+                  return Future.delayed(Duration(seconds: 1));
+                },
+                child: Center(
+                  child: Text(state.errorMessage),
+                ),
+              );
+            }
+            return RefreshIndicator(
+              onRefresh: () async {
+                _homeBloc..add(LeerPostsEvent());
+                return Future.delayed(Duration(seconds: 1));
+              },
+              child: Center(
+                child: Text("Please wait"),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
 
   Widget _postFormat(Post post) {
+    var inputFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+    var inputDate = inputFormat.parse(post.date); // <-- Incoming date
+
+    var outputFormat = DateFormat.yMMMMd('en_US').add_jm();
+    var outputDate = outputFormat.format(inputDate); // <-- Desired date
+
+    print(outputDate);
     return Container(
       //este container es un post
       child: Column(
@@ -111,13 +135,15 @@ class _FeedState extends State<Feed> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage("assets/images/userAvatar.png"),
+                    image: post.authorImageUrl == ""
+                        ? AssetImage("assets/images/userAvatar.png")
+                        : NetworkImage(post.authorImageUrl),
                   ),
                 ),
               ),
               SizedBox(width: 10),
               Text(
-                post.authorUsername ?? "No username",
+                post.authorUsername == "" ? "No username" : post.authorUsername,
                 style: TextStyle(
                   fontFamily: "Proxima Nova Bold",
                   fontSize: 20,
@@ -128,9 +154,14 @@ class _FeedState extends State<Feed> {
           SizedBox(height: 10),
           SizedBox(
             height: 247,
-            child: Image.asset(
-              "assets/images/perrito feliz.jpg",
+            child: Image.network(
+              post.imageUrl,
+              fit: BoxFit.contain,
             ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 25),
+            child: Text(outputDate, style: TextStyle(color: Colors.grey)),
           ),
           SizedBox(height: 12),
           Row(
@@ -170,7 +201,6 @@ class _FeedState extends State<Feed> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    // "Perritu",
                     post.name ?? '',
                     style: TextStyle(
                       fontFamily: "Poppins Regular",
@@ -178,7 +208,6 @@ class _FeedState extends State<Feed> {
                     ),
                   ),
                   Text(
-                    // "Grande",
                     post.size ?? '',
                     style: TextStyle(
                       fontFamily: "Poppins Regular",
@@ -186,7 +215,6 @@ class _FeedState extends State<Feed> {
                     ),
                   ),
                   Text(
-                    // "3 años",
                     post.age ?? '',
                     style: TextStyle(
                       fontFamily: "Poppins Regular",
@@ -209,6 +237,7 @@ class _FeedState extends State<Feed> {
             ],
           ),
           ExpansionTile(
+            expandedAlignment: Alignment.centerLeft,
             title: Text(
               "Description",
               style: TextStyle(color: Colors.grey),
@@ -216,7 +245,10 @@ class _FeedState extends State<Feed> {
             children: [
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                child: Text(post.description ?? ''),
+                child: Text(
+                  post.description ?? '',
+                  textAlign: TextAlign.justify,
+                ),
               ),
             ],
           ),
@@ -233,7 +265,6 @@ class _FeedState extends State<Feed> {
         return AlertDialog(
           title: Row(
             children: [
-              // Icon(Icons.info_outline),
               Image.asset(
                 'assets/images/contactInfoIcon.png',
                 height: 40,
@@ -317,7 +348,6 @@ class Search extends SearchDelegate {
         ? Center(child: Text('No results'))
         : ListView.builder(
             scrollDirection: Axis.vertical,
-            // padding: EdgeInsets.symmetric(horizontal: 20),
             itemCount: filteredPosts.length,
             itemBuilder: (BuildContext context, int index) {
               return postFormat(filteredPosts[index]);
