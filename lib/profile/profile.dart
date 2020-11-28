@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:wag_proyecto_moviles/profile/bloc/profile_bloc.dart';
-import 'package:wag_proyecto_moviles/profile/sizeConfig.dart';
 
 import 'editPost.dart';
 import 'editProfile.dart';
@@ -22,6 +21,16 @@ class _ProfileState extends State<Profile> {
   User _currentUser;
   ProfileBloc _bloc;
   List<Post> _postsList = List();
+  double _blockSizeHorizontal = 0;
+  double _blockSizeVertical = 0;
+
+  double textMultiplier;
+  double imageSizeMultiplier;
+  double heightMultiplier;
+  double widthMultiplier;
+
+  bool isPortrait = true;
+  bool isMobilePortrait = false;
   @override
   void initState() {
     _auth = FirebaseAuth.instance;
@@ -31,6 +40,17 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    double _screenWidth = MediaQuery.of(context).size.width;
+    double _screenHeight = MediaQuery.of(context).size.height;
+
+    _blockSizeHorizontal = _screenWidth / 100;
+    _blockSizeVertical = _screenHeight / 100;
+
+    textMultiplier = _blockSizeVertical;
+    imageSizeMultiplier = _blockSizeHorizontal;
+    heightMultiplier = _blockSizeVertical;
+    widthMultiplier = _blockSizeHorizontal;
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: BlocProvider(
@@ -53,19 +73,19 @@ class _ProfileState extends State<Profile> {
                     children: <Widget>[
                       Container(
                         color: primary,
-                        height: 40 * SizeConfig.heightMultiplier,
+                        height: 40 * heightMultiplier,
                         child: Padding(
                           padding: EdgeInsets.only(
                               left: 30.0,
                               right: 30.0,
-                              top: 10 * SizeConfig.heightMultiplier),
+                              top: 10 * heightMultiplier),
                           child: Column(
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
                                   Container(
-                                    height: 11 * SizeConfig.heightMultiplier,
-                                    width: 22 * SizeConfig.widthMultiplier,
+                                    height: 11 * heightMultiplier,
+                                    width: 22 * widthMultiplier,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
@@ -79,7 +99,7 @@ class _ProfileState extends State<Profile> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 5 * SizeConfig.widthMultiplier,
+                                    width: 5 * widthMultiplier,
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -90,19 +110,18 @@ class _ProfileState extends State<Profile> {
                                             "No username",
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize:
-                                                3 * SizeConfig.textMultiplier,
+                                            fontSize: 3 * textMultiplier,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       SizedBox(
-                                        height: 1 * SizeConfig.heightMultiplier,
+                                        height: 1 * heightMultiplier,
                                       ),
                                     ],
                                   )
                                 ],
                               ),
                               SizedBox(
-                                height: 3 * SizeConfig.heightMultiplier,
+                                height: 3 * heightMultiplier,
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -111,19 +130,17 @@ class _ProfileState extends State<Profile> {
                                   Column(
                                     children: <Widget>[
                                       Text(
-                                        "7",
+                                        _postsList.length.toString(),
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize:
-                                                3 * SizeConfig.textMultiplier,
+                                            fontSize: 3 * textMultiplier,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       Text(
                                         "Posts",
                                         style: TextStyle(
                                           color: Colors.white70,
-                                          fontSize:
-                                              1.9 * SizeConfig.textMultiplier,
+                                          fontSize: 1.9 * textMultiplier,
                                         ),
                                       ),
                                     ],
@@ -152,9 +169,8 @@ class _ProfileState extends State<Profile> {
                                                 "EDIT PROFILE",
                                                 style: TextStyle(
                                                     color: Colors.white,
-                                                    fontSize: 1.8 *
-                                                        SizeConfig
-                                                            .textMultiplier),
+                                                    fontSize:
+                                                        1.8 * textMultiplier),
                                               ),
                                             ),
                                           ],
@@ -168,8 +184,7 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: 35 * SizeConfig.heightMultiplier),
+                        padding: EdgeInsets.only(top: 35 * heightMultiplier),
                         child: Container(
                           padding: EdgeInsets.only(left: 15),
                           width: MediaQuery.of(context).size.width,
@@ -183,10 +198,10 @@ class _ProfileState extends State<Profile> {
                             child: Column(
                               children: <Widget>[
                                 SizedBox(
-                                  height: SizeConfig.heightMultiplier,
+                                  height: heightMultiplier,
                                 ),
                                 Container(
-                                  height: 60 * SizeConfig.heightMultiplier,
+                                  height: 60 * heightMultiplier,
                                   child: GridView.count(
                                     crossAxisCount: 2,
                                     padding: EdgeInsets.all(16.0),
@@ -237,8 +252,8 @@ class _ProfileState extends State<Profile> {
             borderRadius: BorderRadius.circular(10.0),
             child: Image.network(
               post.imageUrl,
-              height: 40 * SizeConfig.imageSizeMultiplier,
-              width: 40 * SizeConfig.imageSizeMultiplier,
+              height: 40 * imageSizeMultiplier,
+              width: 40 * imageSizeMultiplier,
               fit: BoxFit.cover,
             ),
           ),

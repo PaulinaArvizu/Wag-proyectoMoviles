@@ -28,6 +28,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      resizeToAvoidBottomPadding: false,
       //TODO: preguntar sobre padding extraño en appbar
       appBar: AppBar(
         backgroundColor: primary,
