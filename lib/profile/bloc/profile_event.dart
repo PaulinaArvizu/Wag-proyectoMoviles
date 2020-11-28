@@ -40,7 +40,4 @@ class LoadImageEvent extends ProfileEvent {
   List<Object> get props => [takePictureFromCamara];
 }
 
-class LeerPostsEvent extends ProfileEvent {
-  @override
-  List<Object> get props => [];
-}
+class LeerPostsEvent extends ProfileEvent {}
