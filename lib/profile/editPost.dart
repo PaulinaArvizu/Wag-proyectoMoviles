@@ -93,22 +93,12 @@ class _EditPostState extends State<EditPost> {
                     ),
                   ),
                 );
-            } else if (state is EditPostUpdatedState) {
-              //DONE: dialogo o snackbar de success
-              _scaffoldKey.currentState
-                ..hideCurrentSnackBar()
-                ..showSnackBar(
-                  SnackBar(
-                    content: Text("Success: post created"),
-                  ),
-                );
-            } else if (state is ImageLoadState) {
-              _chosenImage = state.image;
             }
           },
           builder: (context, state) {
             if (state is EditPostUpdatedState) {
               _clearForm();
+              Navigator.of(context).pop();
               return _newPostForm();
             }
             return _newPostForm();
@@ -135,24 +125,6 @@ class _EditPostState extends State<EditPost> {
                     width: 150,
                     height: 150,
                   ),
-            SizedBox(height: 48),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.add_a_photo),
-                  onPressed: () {
-                    _bloc.add(LoadImageEvent(takePictureFromCamara: true));
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.add_photo_alternate_outlined),
-                  onPressed: () {
-                    _bloc.add(LoadImageEvent(takePictureFromCamara: false));
-                  },
-                ),
-              ],
-            ),
             SizedBox(height: 48),
             TextField(
               controller: _nameController,
@@ -186,7 +158,7 @@ class _EditPostState extends State<EditPost> {
                 ),
                 fillColor: Colors.white,
                 filled: true,
-                hintText: "Size",
+                hintText: "Size *",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
@@ -225,7 +197,7 @@ class _EditPostState extends State<EditPost> {
                 ),
                 fillColor: Colors.white,
                 filled: true,
-                hintText: "Description",
+                hintText: "Description & location *",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
@@ -245,10 +217,19 @@ class _EditPostState extends State<EditPost> {
                 ),
                 fillColor: Colors.white,
                 filled: true,
-                hintText: "Contact Information",
+                hintText: "Contact Information *",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
+            ),
+            SizedBox(height: 5),
+            Row(
+              children: [
+                Text(
+                  "(*) Required fields",
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
             ),
             SizedBox(height: 24),
             FlatButton(
@@ -258,20 +239,62 @@ class _EditPostState extends State<EditPost> {
                   borderRadius: BorderRadius.circular(10),
                   side: BorderSide(color: primary)),
               onPressed: () {
-                _bloc.add(
-                  EditPostEvent(
-                    name: _nameController.text,
-                    size: _sizeController.text,
-                    age: _ageController.text,
-                    description: _descriptionController.text,
-                    contactInfo: _contactInfoController.text,
-                  ),
-                );
+                String missingFields = _missingFields();
+                if (missingFields.isNotEmpty) {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Row(
+                          children: [
+                            Image.asset(
+                              'assets/images/EmptyCart.png',
+                              height: 35,
+                            ),
+                            SizedBox(width: 10),
+                            Text("Wait!"),
+                          ],
+                        ),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text("Please fill the required fields"),
+                            Text(missingFields),
+                          ],
+                        ),
+                        actions: [
+                          FlatButton(
+                            onPressed: () => Navigator.of(_).pop(),
+                            child: Text(
+                              "OK",
+                              style: TextStyle(
+                                fontFamily: 'Poppins SemiBold',
+                                color: primary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else {
+                  _bloc.add(
+                    EditPostEvent(
+                      name: _nameController.text,
+                      size: _sizeController.text,
+                      age: _ageController.text,
+                      description: _descriptionController.text,
+                      contactInfo: _contactInfoController.text,
+                      date: widget.post.date,
+                      imageUrl: widget.post.imageUrl,
+                    ),
+                  );
+                }
               },
               color: primary,
               textColor: Colors.white,
               child: Text(
-                "POST",
+                "Confirm",
                 style: TextStyle(
                   fontFamily: 'Poppins SemiBold',
                   fontSize: 16,
@@ -290,5 +313,27 @@ class _EditPostState extends State<EditPost> {
     _sizeController.clear();
     _ageController.clear();
     _chosenImage = null;
+  }
+
+  String _missingFields() {
+    String missingFields = "";
+    //verificar que no haya campos vacios
+    if (_chosenImage == null && _currentImage == null) {
+      missingFields += "- Image\n";
+    }
+
+    if (_sizeController.text.isEmpty) {
+      missingFields += "- Size\n";
+    }
+
+    if (_descriptionController.text.isEmpty) {
+      missingFields += "- Description & location\n";
+    }
+
+    if (_contactInfoController.text.isEmpty) {
+      missingFields += "- Contact Information\n";
+    }
+
+    return missingFields;
   }
 }

@@ -21,15 +21,6 @@ class EditPostErrorState extends ProfileState {
   List<Object> get props => [errorMessage];
 }
 
-class ImageLoadState extends ProfileState {
-  final File image;
-
-  ImageLoadState({@required this.image});
-
-  @override
-  List<Object> get props => [image];
-}
-
 class ProfileSuccessState extends ProfileState {
   final List<Post> postsList;
 

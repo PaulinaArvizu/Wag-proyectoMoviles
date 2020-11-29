@@ -66,7 +66,6 @@ class _EditProfileState extends State<EditProfile> {
                     ],
                   ),
                   SizedBox(height: 48),
-                  //TODO:preguntar text field se velve loco
                   TextField(
                     controller: _nameController,
                     decoration: InputDecoration(

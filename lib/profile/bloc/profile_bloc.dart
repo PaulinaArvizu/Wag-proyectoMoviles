@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as Path;
 import 'package:wag_proyecto_moviles/models/post.dart';
 
 part 'profile_event.dart';
@@ -16,7 +12,6 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   List<Post> _postsList;
-  File _chosenImage;
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   ProfileBloc() : super(ProfileInitial());
@@ -32,21 +27,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       } catch (e) {
         yield EditPostErrorState(errorMessage: "Couldn't get posts: \n$e");
       }
-    } else if (event is LoadImageEvent) {
-      _chosenImage = await _chooseImage(event.takePictureFromCamara);
-      if (_chosenImage != null) {
-        yield ImageLoadState(image: _chosenImage);
-      }
     } else if (event is EditPostEvent) {
       try {
-        String imageUrl = await _uploadPicture(_chosenImage);
+        String imageUrl = event.imageUrl;
         await _savePost(
           event.name,
           event.size,
           event.age,
           event.description,
-          imageUrl,
           event.contactInfo,
+          event.date,
+          imageUrl,
         );
         yield EditPostUpdatedState();
       } catch (e) {
@@ -88,52 +79,31 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     String size,
     String age,
     String description,
-    String imageUrl,
     String contactInfo,
+    String date,
+    String imageUrl,
   ) async {
-    // Crea un doc en la collection de posts
-    await FirebaseFirestore.instance.collection("posts").doc().set({
-      "name": name,
-      "size": size,
-      "imageUrl": imageUrl,
-      "age": age,
-      "description": description,
-      "authorID": _auth.currentUser.uid,
-      "authorUsername": _auth.currentUser.displayName,
-      "authorImageUrl": _auth.currentUser.photoURL,
-      "date": DateTime.now().toString(),
-      "contactInfo": contactInfo
-    });
-  }
-
-  //subir imagen al bucket de almacenamiento
-  Future<String> _uploadPicture(File image) async {
-    String imagePath = image.path;
-    // referencia al storage de firebase
-    StorageReference reference = FirebaseStorage.instance
-        .ref()
-        .child("posts/${Path.basename(imagePath)}");
-
-    // subir el archivo a firebase
-    StorageUploadTask uploadTask = reference.putFile(image);
-    await uploadTask.onComplete;
-
-    // recuperar la url del archivo que acabamos de subir
-    dynamic imageURL = await reference.getDownloadURL();
-    return imageURL;
-  }
-
-  Future<File> _chooseImage(bool fromCamera) async {
-    final picker = ImagePicker();
-    final PickedFile chosenImage = await picker.getImage(
-      source: fromCamera ? ImageSource.camera : ImageSource.gallery,
-      maxHeight: 720,
-      maxWidth: 720,
-      imageQuality: 85,
-    );
-    if (chosenImage != null)
-      return File(chosenImage.path);
-    else
-      return null;
+    var doc = await FirebaseFirestore.instance
+        .collection('posts')
+        .where('imageUrl', isEqualTo: imageUrl)
+        .get();
+    if (doc.docs.length > 0) {
+      var docID = doc.docs[0].id;
+      // Crea un doc en la collection de posts
+      await FirebaseFirestore.instance.collection("posts").doc(docID).set({
+        "name": name,
+        "size": size,
+        "imageUrl": imageUrl,
+        "age": age,
+        "description": description,
+        "authorID": _auth.currentUser.uid,
+        "authorUsername": _auth.currentUser.displayName,
+        "authorImageUrl": _auth.currentUser.photoURL,
+        "date": date,
+        "contactInfo": contactInfo
+      });
+    } else {
+      print(imageUrl);
+    }
   }
 }

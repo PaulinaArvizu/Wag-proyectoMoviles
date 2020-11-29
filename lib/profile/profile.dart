@@ -20,6 +20,7 @@ class _ProfileState extends State<Profile> {
   FirebaseAuth _auth;
   User _currentUser;
   ProfileBloc _bloc;
+  var _scaffoldKey = GlobalKey<ScaffoldState>();
   List<Post> _postsList = List();
   double _blockSizeHorizontal = 0;
   double _blockSizeVertical = 0;
@@ -52,6 +53,7 @@ class _ProfileState extends State<Profile> {
     widthMultiplier = _blockSizeHorizontal;
 
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.white,
         body: BlocProvider(
           create: (context) {
@@ -206,7 +208,8 @@ class _ProfileState extends State<Profile> {
                                     crossAxisCount: 2,
                                     padding: EdgeInsets.all(16.0),
                                     children: _postsList
-                                        .map((e) => _postToCard(e))
+                                        .map(
+                                            (e) => _postToCard(e, _scaffoldKey))
                                         .toList(),
                                   ),
                                 ),
@@ -235,7 +238,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  Widget _postToCard(Post post) {
+  Widget _postToCard(Post post, var _scaffoldKey) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -244,7 +247,16 @@ class _ProfileState extends State<Profile> {
               post: post,
             );
           }),
-        );
+        ).then((value) {
+          _scaffoldKey.currentState
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text("Success: post updated"),
+              ),
+            );
+          _bloc..add(LeerPostsEvent());
+        });
       },
       child: Row(
         children: <Widget>[

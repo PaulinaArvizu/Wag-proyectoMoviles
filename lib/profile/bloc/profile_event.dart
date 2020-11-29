@@ -13,6 +13,8 @@ class EditPostEvent extends ProfileEvent {
   final String age;
   final String description;
   final String contactInfo;
+  final String date;
+  final String imageUrl;
 
   EditPostEvent({
     @required this.name,
@@ -20,24 +22,13 @@ class EditPostEvent extends ProfileEvent {
     @required this.age,
     @required this.description,
     @required this.contactInfo,
+    @required this.date,
+    @required this.imageUrl,
   });
 
   @override
-  List<Object> get props => [
-        name,
-        size,
-        age,
-        description,
-        contactInfo,
-      ];
-}
-
-class LoadImageEvent extends ProfileEvent {
-  final bool takePictureFromCamara;
-
-  LoadImageEvent({@required this.takePictureFromCamara});
-  @override
-  List<Object> get props => [takePictureFromCamara];
+  List<Object> get props =>
+      [name, size, age, description, contactInfo, date, imageUrl];
 }
 
 class LeerPostsEvent extends ProfileEvent {}
