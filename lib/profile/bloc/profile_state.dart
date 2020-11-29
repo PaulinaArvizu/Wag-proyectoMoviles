@@ -28,3 +28,14 @@ class ProfileSuccessState extends ProfileState {
   @override
   List<Object> get props => [postsList];
 }
+
+class ImagenCargadaState extends ProfileState {
+  final File imagen;
+
+  ImagenCargadaState({@required this.imagen});
+
+  @override
+  List<Object> get props => [imagen];
+}
+
+class PostDeletedState extends ProfileState {}

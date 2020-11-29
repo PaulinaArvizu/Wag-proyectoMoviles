@@ -79,7 +79,7 @@ class _EditPostState extends State<EditPost> {
                               FlatButton(
                                 onPressed: () => Navigator.of(_).pop(),
                                 child: Text(
-                                  "ACEPTAR",
+                                  "OK!",
                                   style: TextStyle(
                                     fontFamily: 'Poppins SemiBold',
                                     color: primary,
@@ -93,12 +93,14 @@ class _EditPostState extends State<EditPost> {
                     ),
                   ),
                 );
+            } else if (state is PostDeletedState) {
+              Navigator.of(context).pop('Delete');
             }
           },
           builder: (context, state) {
             if (state is EditPostUpdatedState) {
               _clearForm();
-              Navigator.of(context).pop();
+              Navigator.of(context).pop('Save');
               return _newPostForm();
             }
             return _newPostForm();
@@ -232,74 +234,122 @@ class _EditPostState extends State<EditPost> {
               ],
             ),
             SizedBox(height: 24),
-            FlatButton(
-              minWidth: 150,
-              padding: EdgeInsets.all(10),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(color: primary)),
-              onPressed: () {
-                String missingFields = _missingFields();
-                if (missingFields.isNotEmpty) {
-                  showDialog(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        title: Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/EmptyCart.png',
-                              height: 35,
-                            ),
-                            SizedBox(width: 10),
-                            Text("Wait!"),
-                          ],
-                        ),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text("Please fill the required fields"),
-                            Text(missingFields),
-                          ],
-                        ),
-                        actions: [
-                          FlatButton(
-                            onPressed: () => Navigator.of(_).pop(),
-                            child: Text(
-                              "OK",
-                              style: TextStyle(
-                                fontFamily: 'Poppins SemiBold',
-                                color: primary,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                } else {
-                  _bloc.add(
-                    EditPostEvent(
-                      name: _nameController.text,
-                      size: _sizeController.text,
-                      age: _ageController.text,
-                      description: _descriptionController.text,
-                      contactInfo: _contactInfoController.text,
-                      date: widget.post.date,
-                      imageUrl: widget.post.imageUrl,
+            Row(
+              children: [
+                FlatButton(
+                  minWidth: 120,
+                  padding: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: Colors.grey)),
+                  onPressed: () {
+                    Navigator.of(context).pop('Cancel');
+                  },
+                  color: Colors.grey,
+                  textColor: Colors.white,
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                      fontFamily: 'Poppins SemiBold',
+                      fontSize: 16,
                     ),
-                  );
-                }
-              },
-              color: primary,
-              textColor: Colors.white,
-              child: Text(
-                "Confirm",
-                style: TextStyle(
-                  fontFamily: 'Poppins SemiBold',
-                  fontSize: 16,
+                  ),
                 ),
-              ),
+                SizedBox(
+                  width: 10,
+                ),
+                FlatButton(
+                  minWidth: 120,
+                  padding: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: Colors.red)),
+                  onPressed: () {
+                    _openDialog();
+                  },
+                  color: Colors.red[800],
+                  textColor: Colors.white,
+                  child: Text(
+                    "Delete",
+                    style: TextStyle(
+                      fontFamily: 'Poppins SemiBold',
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                FlatButton(
+                  minWidth: 120,
+                  padding: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: primary)),
+                  onPressed: () {
+                    String missingFields = _missingFields();
+                    if (missingFields.isNotEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            title: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/images/EmptyCart.png',
+                                  height: 35,
+                                ),
+                                SizedBox(width: 10),
+                                Text("Wait!"),
+                              ],
+                            ),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text("Please fill the required fields"),
+                                Text(missingFields),
+                              ],
+                            ),
+                            actions: [
+                              FlatButton(
+                                onPressed: () => Navigator.of(_).pop(),
+                                child: Text(
+                                  "OK",
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins SemiBold',
+                                    color: primary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    } else {
+                      _bloc.add(
+                        EditPostEvent(
+                          name: _nameController.text,
+                          size: _sizeController.text,
+                          age: _ageController.text,
+                          description: _descriptionController.text,
+                          contactInfo: _contactInfoController.text,
+                          date: widget.post.date,
+                          imageUrl: widget.post.imageUrl,
+                        ),
+                      );
+                    }
+                  },
+                  color: primary,
+                  textColor: Colors.white,
+                  child: Text(
+                    "Save",
+                    style: TextStyle(
+                      fontFamily: 'Poppins SemiBold',
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -335,5 +385,58 @@ class _EditPostState extends State<EditPost> {
     }
 
     return missingFields;
+  }
+
+  _openDialog() {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Image.asset(
+                'assets/images/EmptyCart.png',
+                height: 40,
+              ),
+              SizedBox(width: 10),
+              Text("Warning!"),
+            ],
+          ),
+          content: Text('You are about to delete this post. Is that correct?'),
+          actions: [
+            Row(
+              children: [
+                FlatButton(
+                  onPressed: () => Navigator.of(_).pop(),
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                      fontFamily: 'Poppins SemiBold',
+                      color: primary,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                FlatButton(
+                  onPressed: () {
+                    _bloc.add(DeletePostEvent(imageUrl: _currentImage));
+                    Navigator.of(_).pop();
+                  },
+                  child: Text(
+                    "Yes! Delete",
+                    style: TextStyle(
+                      fontFamily: 'Poppins SemiBold',
+                      color: primary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 }

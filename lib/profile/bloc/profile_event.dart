@@ -31,4 +31,25 @@ class EditPostEvent extends ProfileEvent {
       [name, size, age, description, contactInfo, date, imageUrl];
 }
 
+class CargarImagenEvent extends ProfileEvent {
+  final bool takePictureFromCamera;
+
+  CargarImagenEvent({@required this.takePictureFromCamera});
+  @override
+  List<Object> get props => [takePictureFromCamera];
+}
+
 class LeerPostsEvent extends ProfileEvent {}
+
+class EditProfileEvent extends ProfileEvent {}
+
+class DeletePostEvent extends ProfileEvent {
+  final String imageUrl;
+
+  DeletePostEvent({
+    @required this.imageUrl,
+  });
+
+  @override
+  List<Object> get props => [imageUrl];
+}

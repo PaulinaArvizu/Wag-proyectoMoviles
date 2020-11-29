@@ -65,137 +65,131 @@ class _ProfileState extends State<Profile> {
             builder: (context, state) {
               if (state is ProfileSuccessState) {
                 _postsList = state.postsList;
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    _bloc..add(LeerPostsEvent());
-                    return Future.delayed(Duration(seconds: 1));
-                  },
-                  child: Stack(
-                    overflow: Overflow.visible,
-                    children: <Widget>[
-                      Container(
-                        color: primary,
-                        height: 40 * heightMultiplier,
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 30.0,
-                              right: 30.0,
-                              top: 10 * heightMultiplier),
-                          child: Column(
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Container(
-                                    height: 11 * heightMultiplier,
-                                    width: 22 * widthMultiplier,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.contain,
-                                        image: _currentUser.photoURL == null
-                                            ? AssetImage(
-                                                "assets/images/userAvatar.png")
-                                            : NetworkImage(
-                                                _currentUser.photoURL),
-                                      ),
+                return Stack(
+                  overflow: Overflow.visible,
+                  children: <Widget>[
+                    Container(
+                      color: primary,
+                      height: 40 * heightMultiplier,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: 30.0,
+                            right: 30.0,
+                            top: 10 * heightMultiplier),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  height: 11 * heightMultiplier,
+                                  width: 22 * widthMultiplier,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.contain,
+                                      image: _currentUser.photoURL == null
+                                          ? AssetImage(
+                                              "assets/images/userAvatar.png")
+                                          : NetworkImage(_currentUser.photoURL),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 5 * widthMultiplier,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        _currentUser.displayName ??
-                                            "No username",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 3 * textMultiplier,
-                                            fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(
+                                  width: 5 * widthMultiplier,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      _currentUser.displayName ?? "No username",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 3 * textMultiplier,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    SizedBox(
+                                      height: 1 * heightMultiplier,
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 3 * heightMultiplier,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Text(
+                                      _postsList.length.toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 3 * textMultiplier,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "Posts",
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 1.9 * textMultiplier,
                                       ),
-                                      SizedBox(
-                                        height: 1 * heightMultiplier,
+                                    ),
+                                  ],
+                                ),
+                                GestureDetector(
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(color: Colors.white),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
                                       ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 3 * heightMultiplier,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Column(
-                                    children: <Widget>[
-                                      Text(
-                                        _postsList.length.toString(),
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 3 * textMultiplier,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        "Posts",
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 1.9 * textMultiplier,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  GestureDetector(
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                        ),
-                                        child: Row(
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: Icon(
-                                                Icons.edit,
-                                                color: Colors.white,
-                                              ),
-                                              onPressed: null,
+                                      child: Row(
+                                        children: <Widget>[
+                                          IconButton(
+                                            icon: Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                "EDIT PROFILE",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize:
-                                                        1.8 * textMultiplier),
-                                              ),
+                                            onPressed: null,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              "EDIT PROFILE",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize:
+                                                      1.8 * textMultiplier),
                                             ),
-                                          ],
-                                        )),
-                                    onTap: _openEditProfile,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                          ),
+                                        ],
+                                      )),
+                                  onTap: _openEditProfile,
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 35 * heightMultiplier),
-                        child: Container(
-                          padding: EdgeInsets.only(left: 15),
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(30.0),
-                                topLeft: Radius.circular(30.0),
-                              )),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 35 * heightMultiplier),
+                      child: Container(
+                        padding: EdgeInsets.only(left: 15),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(30.0),
+                              topLeft: Radius.circular(30.0),
+                            )),
+                        child: RefreshIndicator(
+                          onRefresh: () async {
+                            _bloc..add(LeerPostsEvent());
+                            return Future.delayed(Duration(seconds: 1));
+                          },
                           child: SingleChildScrollView(
                             child: Column(
                               children: <Widget>[
@@ -217,9 +211,9 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 );
               }
               return Center(
@@ -241,6 +235,7 @@ class _ProfileState extends State<Profile> {
   Widget _postToCard(Post post, var _scaffoldKey) {
     return GestureDetector(
       onTap: () {
+        _scaffoldKey.currentState..hideCurrentSnackBar();
         Navigator.of(context).push(
           MaterialPageRoute(builder: (context) {
             return EditPost(
@@ -248,14 +243,17 @@ class _ProfileState extends State<Profile> {
             );
           }),
         ).then((value) {
-          _scaffoldKey.currentState
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text("Success: post updated"),
-              ),
-            );
-          _bloc..add(LeerPostsEvent());
+          if ((value == 'Save' || value == 'Delete')) {
+            _scaffoldKey.currentState
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                    content: value == 'Save'
+                        ? Text("Success: post updated")
+                        : Text("Success: post deleted")),
+              );
+            _bloc..add(LeerPostsEvent());
+          }
         });
       },
       child: Row(

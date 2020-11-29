@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -42,6 +43,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         yield EditPostUpdatedState();
       } catch (e) {
         yield EditPostErrorState(errorMessage: "Error at saving post: $e");
+      }
+    } else if (event is DeletePostEvent) {
+      try {
+        String imageUrl = event.imageUrl;
+        await _deletePost(imageUrl);
+        yield PostDeletedState();
+      } catch (e) {
+        yield EditPostErrorState(errorMessage: "Error at deleting post: $e");
       }
     }
   }
@@ -102,6 +111,22 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         "date": date,
         "contactInfo": contactInfo
       });
+    } else {
+      print(imageUrl);
+    }
+  }
+
+  Future<void> _deletePost(
+    String imageUrl,
+  ) async {
+    var doc = await FirebaseFirestore.instance
+        .collection('posts')
+        .where('imageUrl', isEqualTo: imageUrl)
+        .get();
+    if (doc.docs.length > 0) {
+      var docID = doc.docs[0].id;
+      // Crea un doc en la collection de posts
+      await FirebaseFirestore.instance.collection("posts").doc(docID).delete();
     } else {
       print(imageUrl);
     }
