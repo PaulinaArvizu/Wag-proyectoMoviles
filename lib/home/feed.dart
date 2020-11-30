@@ -4,6 +4,7 @@ import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/home/bloc/home_bloc.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:intl/intl.dart';
+import 'package:extended_image/extended_image.dart';
 
 class Feed extends StatefulWidget {
   Feed({Key key}) : super(key: key);
@@ -154,9 +155,46 @@ class _FeedState extends State<Feed> {
           SizedBox(height: 10),
           SizedBox(
             height: 247,
-            child: Image.network(
+            child: ExtendedImage.network(
               post.imageUrl,
               fit: BoxFit.contain,
+              loadStateChanged: (ExtendedImageState state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.loading:
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/Loading.gif",
+                          height: 75,
+                        ),
+                        Text("Loading..."),
+                      ],
+                    );
+                    break;
+                  case LoadState.completed:
+                    return Image.network(
+                      post.imageUrl,
+                      fit: BoxFit.contain,
+                    );
+                    break;
+                  case LoadState.failed:
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/ImageNotFound.png",
+                          height: 150,
+                        ),
+                        Text("Image not found"),
+                      ],
+                    );
+                    break;
+                }
+                return null;
+              },
             ),
           ),
           Padding(
