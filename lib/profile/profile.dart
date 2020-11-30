@@ -202,7 +202,57 @@ class _ProfileState extends State<Profile> {
                                             });
                                           }),
                                     ),
-                                  )
+                                  ),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.logout,
+                                          color: background,
+                                        ),
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return AlertDialog(
+                                                title: Text("Logout"),
+                                                content: Text(
+                                                    'Are you sure you want to logout?'),
+                                                actions: [
+                                                  FlatButton(
+                                                    onPressed: () {
+                                                      Navigator.of(_).pop();
+                                                    },
+                                                    child: Text(
+                                                      "No",
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Poppins SemiBold',
+                                                        color: primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  FlatButton(
+                                                    onPressed: () {
+                                                      Navigator.of(_).pop();
+                                                    },
+                                                    child: Text(
+                                                      "Yes!",
+                                                      style: TextStyle(
+                                                        fontFamily:
+                                                            'Poppins SemiBold',
+                                                        color: primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
