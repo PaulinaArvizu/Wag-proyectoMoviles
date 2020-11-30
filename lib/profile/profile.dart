@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -320,11 +321,52 @@ class _ProfileState extends State<Profile> {
         children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            child: Image.network(
+            child: ExtendedImage.network(
               post.imageUrl,
               height: 40 * imageSizeMultiplier,
               width: 40 * imageSizeMultiplier,
               fit: BoxFit.cover,
+              loadStateChanged: (ExtendedImageState state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.loading:
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/Loading.gif",
+                          height: 15 * imageSizeMultiplier,
+                        ),
+                        Text("Loading..."),
+                      ],
+                    );
+                    break;
+                  case LoadState.completed:
+                    return Image.network(
+                      post.imageUrl,
+                      height: 40 * imageSizeMultiplier,
+                      width: 40 * imageSizeMultiplier,
+                      fit: BoxFit.cover,
+                    );
+                    break;
+                  case LoadState.failed:
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/ImageNotFound.png",
+                          height: 35 * imageSizeMultiplier,
+                          width: 35 * imageSizeMultiplier,
+                          fit: BoxFit.cover,
+                        ),
+                        Text("Image not found"),
+                      ],
+                    );
+                    break;
+                }
+                return null;
+              },
             ),
           ),
           Spacer(),
