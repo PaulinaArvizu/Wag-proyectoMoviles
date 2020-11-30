@@ -12,7 +12,7 @@ part 'store_state.dart';
 class StoreBloc extends Bloc<StoreEvent, StoreState> {
   //referencia a la box previamente abierta (en el main)
   Box _cartBox = Hive.box("Cart");
-  List<ProductItemCart> _cartElements = List();
+  List<dynamic> _cartElements = List();
 
   StoreBloc() : super(StoreInitial());
 
