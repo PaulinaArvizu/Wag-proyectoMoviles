@@ -53,3 +53,18 @@ class DeletePostEvent extends ProfileEvent {
   @override
   List<Object> get props => [imageUrl];
 }
+
+class UpdateProfileEvent extends ProfileEvent {
+  final String name;
+  final bool nameChanged;
+  final bool imageChanged;
+
+  UpdateProfileEvent({
+    @required this.name,
+    @required this.nameChanged,
+    @required this.imageChanged,
+  });
+
+  @override
+  List<Object> get props => [name, nameChanged, imageChanged];
+}

@@ -67,6 +67,7 @@ class _ProfileState extends State<Profile> {
                 _postsList = state.postsList;
                 return RefreshIndicator(
                   onRefresh: () async {
+                    _currentUser = _auth.currentUser;
                     _bloc..add(LeerPostsEvent());
                     return Future.delayed(Duration(seconds: 1));
                   },
@@ -112,7 +113,7 @@ class _ProfileState extends State<Profile> {
                                             "No username",
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 3 * textMultiplier,
+                                            fontSize: 2 * textMultiplier,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       SizedBox(
@@ -179,6 +180,21 @@ class _ProfileState extends State<Profile> {
                                         )),
                                     onTap: _openEditProfile,
                                   ),
+                                  GestureDetector(
+                                    child: Container(
+                                      child: IconButton(
+                                          icon: Icon(
+                                            Icons.refresh,
+                                            color: background,
+                                          ),
+                                          onPressed: () async {
+                                            _currentUser = _auth.currentUser;
+                                            _bloc..add(LeerPostsEvent());
+                                            // return Future.delayed(
+                                            //     Duration(seconds: 1)); //e.e
+                                          }),
+                                    ),
+                                  )
                                 ],
                               ),
                             ],
@@ -235,7 +251,17 @@ class _ProfileState extends State<Profile> {
       MaterialPageRoute(builder: (context) {
         return EditProfile();
       }),
-    );
+    ).then((value) {
+      if (value == 'Save') {
+        _scaffoldKey.currentState
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+                content:
+                    Text("Success: profile updated. Refresh to see changes.")),
+          );
+      }
+    });
   }
 
   Widget _postToCard(Post post, var _scaffoldKey) {
@@ -255,8 +281,9 @@ class _ProfileState extends State<Profile> {
               ..showSnackBar(
                 SnackBar(
                     content: value == 'Save'
-                        ? Text("Success: post updated")
-                        : Text("Success: post deleted")),
+                        ? Text("Success: post updated. Refresh to see changes.")
+                        : Text(
+                            "Success: post deleted. Refresh to see changes.")),
               );
             _bloc..add(LeerPostsEvent());
           }
