@@ -17,6 +17,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  bool _refreshing = false;
   FirebaseAuth _auth;
   User _currentUser;
   ProfileBloc _bloc;
@@ -188,10 +189,16 @@ class _ProfileState extends State<Profile> {
                                             color: background,
                                           ),
                                           onPressed: () async {
+                                            setState(() {
+                                              _refreshing = !_refreshing;
+                                            });
+                                            await Future.delayed(
+                                                Duration(milliseconds: 500));
                                             _currentUser = _auth.currentUser;
                                             _bloc..add(LeerPostsEvent());
-                                            // return Future.delayed(
-                                            //     Duration(seconds: 1)); //e.e
+                                            setState(() {
+                                              _refreshing = !_refreshing;
+                                            });
                                           }),
                                     ),
                                   )
@@ -233,7 +240,27 @@ class _ProfileState extends State<Profile> {
                             ),
                           ),
                         ),
-                      )
+                      ),
+                      Positioned(
+                        left: (MediaQuery.of(context).size.width / 2) - 75,
+                        top: MediaQuery.of(context).size.height / 2,
+                        child: AnimatedOpacity(
+                          opacity: _refreshing ? 1.0 : 0.0,
+                          duration: Duration(milliseconds: 100),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                "assets/images/Loading.gif",
+                                height: 75,
+                              ),
+                              Text("Loading..."),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 );
