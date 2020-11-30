@@ -22,51 +22,103 @@ class _PaymentState extends State<Payment> {
         title: Text('Choose payment method'),
         backgroundColor: primary,
       ),
-      body: ListView(
-        children: <Widget>[
-          const SizedBox(
-            height: 60,
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              RaisedButton(
-                onPressed: () {
-                  _gotoPayment();
-                },
-                color: primary,
-                child: Text('Credit/Debit card',
+      body:
+          // SizedBox(height: 60),
+          Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            FlatButton(
+              minWidth: double.infinity,
+              padding: EdgeInsets.all(15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+                side: BorderSide(color: secondary),
+              ),
+              onPressed: _gotoPayment,
+              color: secondary_background,
+              textColor: secondary,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/credit-card.png",
+                    height: 30,
+                    width: 30,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    "Credit/Debit card",
                     style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    )),
+                      fontFamily: 'Poppins Regular',
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 30),
-              RaisedButton(
-                onPressed: () {
-                  _gotoPayment();
-                },
-                color: primary,
-                child: const Text('GiftCard',
-                    style: TextStyle(fontSize: 20, color: Colors.white)),
+            ),
+            SizedBox(height: 15),
+            FlatButton(
+              minWidth: double.infinity,
+              padding: EdgeInsets.all(15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+                side: BorderSide(color: secondary),
               ),
-              const SizedBox(height: 30),
-              RaisedButton(
-                onPressed: () {
-                  _gotoPayment();
-                },
-                color: primary,
-                padding: const EdgeInsets.all(0.0),
-                child: Container(
-                  decoration: const BoxDecoration(),
-                  padding: const EdgeInsets.all(10.0),
-                  child: const Text('Paypal',
-                      style: TextStyle(fontSize: 20, color: Colors.white)),
-                ),
+              onPressed: _gotoPayment,
+              color: secondary_background,
+              textColor: secondary,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/gift-card.png",
+                    height: 30,
+                    width: 30,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    "Giftcard",
+                    style: TextStyle(
+                      fontFamily: 'Poppins Regular',
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ],
+            ),
+            SizedBox(height: 15),
+            FlatButton(
+              minWidth: double.infinity,
+              padding: EdgeInsets.all(15),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+                side: BorderSide(color: secondary),
+              ),
+              onPressed: _gotoPayment,
+              color: secondary_background,
+              textColor: secondary,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    "assets/images/paypal.png",
+                    height: 30,
+                    width: 30,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    "Paypal",
+                    style: TextStyle(
+                      fontFamily: 'Poppins Regular',
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
