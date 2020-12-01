@@ -11,7 +11,6 @@ class ProductItem {
     @required this.productTitle,
     @required this.productDescription,
     @required this.productImage,
-    @required this.productAmount,
     @required this.productPrice,
   });
 }
