@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
@@ -22,7 +20,14 @@ class _EditPostState extends State<EditPost> {
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _contactInfoController = TextEditingController();
 
-  File _chosenImage;
+  bool _nameLengthError = false;
+  bool _sizeLengthError = false;
+  bool _ageLengthError = false;
+
+  bool _sizeEmptyError = false;
+  bool _descriptionEmptyError = false;
+  bool _contactEmptyError = false;
+
   ProfileBloc _bloc;
   String _currentImage;
   var _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -52,6 +57,13 @@ class _EditPostState extends State<EditPost> {
             fontSize: 24,
           ),
         ),
+        actions: [
+          FlatButton(
+            textColor: Colors.white,
+            onPressed: _clearForm,
+            child: Text("Clear"),
+          ),
+        ],
       ),
       body: BlocProvider(
         create: (context) {
@@ -116,17 +128,11 @@ class _EditPostState extends State<EditPost> {
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            _chosenImage != null
-                ? Image.file(
-                    _chosenImage,
-                    width: 150,
-                    height: 150,
-                  )
-                : Image.network(
-                    _currentImage,
-                    width: 150,
-                    height: 150,
-                  ),
+            Image.network(
+              _currentImage,
+              width: 150,
+              height: 150,
+            ),
             SizedBox(height: 48),
             TextField(
               controller: _nameController,
@@ -139,12 +145,28 @@ class _EditPostState extends State<EditPost> {
                   borderSide: BorderSide(color: primary),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                fillColor: Colors.white,
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor: _nameLengthError ? Colors.red[100] : Colors.white,
                 filled: true,
                 hintText: "Name",
                 hintStyle: TextStyle(color: Colors.grey),
+                errorText: _nameLengthError
+                    ? "Name must be 20 characters or less"
+                    : null,
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
+              onChanged: (value) {
+                setState(() {
+                  _nameLengthError = value.length > 20;
+                });
+              },
             ),
             SizedBox(height: 12),
             TextField(
@@ -158,12 +180,33 @@ class _EditPostState extends State<EditPost> {
                   borderSide: BorderSide(color: primary),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                fillColor: Colors.white,
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor: _sizeEmptyError || _sizeLengthError
+                    ? Colors.red[100]
+                    : Colors.white,
                 filled: true,
                 hintText: "Size *",
+                errorText: _sizeEmptyError
+                    ? "Size cannot be empty"
+                    : _sizeLengthError
+                        ? "Size must be 20 characters or less"
+                        : null,
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
+              onChanged: (value) {
+                setState(() {
+                  _sizeEmptyError = value.isEmpty;
+                  _sizeLengthError = value.length > 20;
+                });
+              },
             ),
             SizedBox(height: 12),
             TextField(
@@ -177,12 +220,28 @@ class _EditPostState extends State<EditPost> {
                   borderSide: BorderSide(color: primary),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                fillColor: Colors.white,
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor: _ageLengthError ? Colors.red[100] : Colors.white,
                 filled: true,
                 hintText: "Age (aprox.)",
+                errorText: _ageLengthError
+                    ? "Age must be 20 characters or less"
+                    : null,
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
+              onChanged: (value) {
+                setState(() {
+                  _ageLengthError = value.length > 20;
+                });
+              },
             ),
             SizedBox(height: 12),
             TextField(
@@ -197,12 +256,29 @@ class _EditPostState extends State<EditPost> {
                   borderSide: BorderSide(color: primary),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                fillColor: Colors.white,
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor:
+                    _descriptionEmptyError ? Colors.red[100] : Colors.white,
                 filled: true,
                 hintText: "Description & location *",
+                errorText: _descriptionEmptyError
+                    ? "Description & location cannot be empty"
+                    : null,
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
+              onChanged: (value) {
+                setState(() {
+                  _descriptionEmptyError = value.isEmpty;
+                });
+              },
             ),
             SizedBox(height: 12),
             TextField(
@@ -217,12 +293,28 @@ class _EditPostState extends State<EditPost> {
                   borderSide: BorderSide(color: primary),
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                fillColor: Colors.white,
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                fillColor: _contactEmptyError ? Colors.red[100] : Colors.white,
                 filled: true,
-                hintText: "Contact Information *",
+                hintText: "Contact information *",
+                errorText: _contactEmptyError
+                    ? "Contact information cannot be empty"
+                    : null,
                 hintStyle: TextStyle(color: Colors.grey),
               ),
               style: TextStyle(fontFamily: 'Poppins Regular'),
+              onChanged: (value) {
+                setState(() {
+                  _contactEmptyError = value.isEmpty;
+                });
+              },
             ),
             SizedBox(height: 5),
             Row(
@@ -288,6 +380,20 @@ class _EditPostState extends State<EditPost> {
                       side: BorderSide(color: primary)),
                   onPressed: () {
                     String missingFields = _missingFields();
+                    if (_nameLengthError ||
+                        _sizeLengthError ||
+                        _ageLengthError) {
+                      _scaffoldKey.currentState
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              "Name, size and age fields must be 20 characters or less",
+                            ),
+                          ),
+                        );
+                      return;
+                    }
                     if (missingFields.isNotEmpty) {
                       showDialog(
                         context: context,
@@ -325,19 +431,20 @@ class _EditPostState extends State<EditPost> {
                           );
                         },
                       );
-                    } else {
-                      _bloc.add(
-                        EditPostEvent(
-                          name: _nameController.text,
-                          size: _sizeController.text,
-                          age: _ageController.text,
-                          description: _descriptionController.text,
-                          contactInfo: _contactInfoController.text,
-                          date: widget.post.date,
-                          imageUrl: widget.post.imageUrl,
-                        ),
-                      );
+                      return;
                     }
+                    // print("holis");
+                    _bloc.add(
+                      EditPostEvent(
+                        name: _nameController.text,
+                        size: _sizeController.text,
+                        age: _ageController.text,
+                        description: _descriptionController.text,
+                        contactInfo: _contactInfoController.text,
+                        date: widget.post.date,
+                        imageUrl: widget.post.imageUrl,
+                      ),
+                    );
                   },
                   color: primary,
                   textColor: Colors.white,
@@ -358,20 +465,23 @@ class _EditPostState extends State<EditPost> {
   }
 
   _clearForm() {
-    //borrar el formulario
-    _nameController.clear();
-    _sizeController.clear();
-    _ageController.clear();
-    _chosenImage = null;
+    setState(() {
+      //borrar el formulario
+      _nameController.clear();
+      _sizeController.clear();
+      _ageController.clear();
+      _descriptionController.clear();
+      _contactInfoController.clear();
+
+      _sizeEmptyError = true;
+      _descriptionEmptyError = true;
+      _contactEmptyError = true;
+    });
   }
 
   String _missingFields() {
     String missingFields = "";
     //verificar que no haya campos vacios
-    if (_chosenImage == null && _currentImage == null) {
-      missingFields += "- Image\n";
-    }
-
     if (_sizeController.text.isEmpty) {
       missingFields += "- Size\n";
     }
