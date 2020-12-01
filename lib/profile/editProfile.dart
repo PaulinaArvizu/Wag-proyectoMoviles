@@ -21,7 +21,6 @@ class _EditProfileState extends State<EditProfile> {
   FirebaseAuth _auth;
   User _currentUser;
   ProfileBloc _bloc;
-  bool _imageChanged = false;
   bool _nameChanged = false;
 
   @override
@@ -105,7 +104,6 @@ class _EditProfileState extends State<EditProfile> {
                       onPressed: () {
                         _bloc.add(
                             CargarImagenEvent(takePictureFromCamera: true));
-                        _imageChanged = (_chosenImage != null);
                       },
                     ),
                     IconButton(
@@ -113,7 +111,6 @@ class _EditProfileState extends State<EditProfile> {
                       onPressed: () {
                         _bloc.add(
                             CargarImagenEvent(takePictureFromCamera: false));
-                        _imageChanged = (_chosenImage != null);
                       },
                     ),
                   ],
