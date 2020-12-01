@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
-import 'package:wag_proyecto_moviles/models/product_repository.dart';
+import 'package:wag_proyecto_moviles/store/bloc/store_bloc.dart';
 import 'package:wag_proyecto_moviles/store/product.dart';
 
 import 'cart/cart.dart';
@@ -19,7 +20,8 @@ class Store extends StatefulWidget {
 
 class _StoreState extends State<Store> {
   List<ProductItemCart> productList = new List<ProductItemCart>();
-  List<ProductItem> _products = ProductRepository.loadProducts();
+  List<ProductItem> _products = List();
+  StoreBloc _storeBloc;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,12 +53,43 @@ class _StoreState extends State<Store> {
         ],
       ),
       backgroundColor: background,
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: EdgeInsets.all(16.0),
-        childAspectRatio: 8 / 10,
-        children:
-            _products.map((product) => Product(product: product)).toList(),
+      body: BlocProvider(
+        create: (context) {
+          _storeBloc = StoreBloc();
+          return _storeBloc..add(LeerProductosEvent());
+        },
+        child: BlocConsumer<StoreBloc, StoreState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state is StoreSuccessState) {
+              _products = state.productsList;
+              return GridView.count(
+                crossAxisCount: 2,
+                padding: EdgeInsets.all(16.0),
+                childAspectRatio: 8 / 10,
+                children: _products
+                    .map((product) => Product(product: product))
+                    .toList(),
+              );
+            } else if (state is StoreErrorState) {
+              return Center(
+                child: Text("Error loading store:\n${state.errorMessage}"),
+              );
+            }
+            return Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    "assets/images/Loading.gif",
+                    height: 50,
+                  ),
+                  Text("Loading..."),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -64,16 +97,7 @@ class _StoreState extends State<Store> {
   void _openCartPage() {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (context) {
-        return Cart(
-          productsList: ProductRepository.loadProducts().map((product) {
-            return new ProductItemCart(
-              productTitle: product.productTitle,
-              productImage: product.productImage,
-              productAmount: 0,
-              productPrice: product.productPrice,
-            );
-          }).toList(),
-        );
+        return Cart();
       }),
     );
   }
