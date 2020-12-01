@@ -8,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wag_proyecto_moviles/auth/user_auth_provider.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:path/path.dart' as Path;
 
@@ -70,6 +71,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         yield ImagenCargadaState(imagen: _chosenImage);
       } catch (umu) {
         yield EditPostErrorState(errorMessage: 'Error at loading image: $umu');
+      }
+    } else if (event is ProfileLogOutEvent) {
+      UserAuthProvider _authProvider = UserAuthProvider();
+      try {
+        _authProvider.signOutGoogle();
+      } catch (e) {
+        print(e);
+      }
+      try {
+        _authProvider.signOutFirebase();
+      } catch (e) {
+        print(e);
       }
     }
   }

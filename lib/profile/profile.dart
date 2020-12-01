@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
+import 'package:wag_proyecto_moviles/inicio/login.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:wag_proyecto_moviles/profile/bloc/profile_bloc.dart';
 
@@ -210,46 +211,7 @@ class _ProfileState extends State<Profile> {
                                           Icons.logout,
                                           color: background,
                                         ),
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (_) {
-                                              return AlertDialog(
-                                                title: Text("Logout"),
-                                                content: Text(
-                                                    'Are you sure you want to logout?'),
-                                                actions: [
-                                                  FlatButton(
-                                                    onPressed: () {
-                                                      Navigator.of(_).pop();
-                                                    },
-                                                    child: Text(
-                                                      "No",
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Poppins SemiBold',
-                                                        color: primary,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  FlatButton(
-                                                    onPressed: () {
-                                                      Navigator.of(_).pop();
-                                                    },
-                                                    child: Text(
-                                                      "Yes!",
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Poppins SemiBold',
-                                                        color: primary,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        },
+                                        onPressed: _showLogoutDialog,
                                       ),
                                     ],
                                   ),
@@ -422,6 +384,48 @@ class _ProfileState extends State<Profile> {
           Spacer(),
         ],
       ),
+    );
+  }
+
+  _showLogoutDialog() {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("Logout"),
+          content: Text('Are you sure you want to logout?'),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                Navigator.of(_).pop();
+              },
+              child: Text(
+                "No",
+                style: TextStyle(
+                  fontFamily: 'Poppins Regular',
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            FlatButton(
+              onPressed: () {
+                _bloc.add(ProfileLogOutEvent());
+                Navigator.of(_).pop();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => LogIn()),
+                    (Route<dynamic> route) => false);
+              },
+              child: Text(
+                "Yes!",
+                style: TextStyle(
+                  fontFamily: 'Poppins Regular',
+                  color: primary,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

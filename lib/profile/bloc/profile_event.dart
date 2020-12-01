@@ -68,3 +68,5 @@ class UpdateProfileEvent extends ProfileEvent {
   @override
   List<Object> get props => [name, nameChanged, imageChanged];
 }
+
+class ProfileLogOutEvent extends ProfileEvent {}
