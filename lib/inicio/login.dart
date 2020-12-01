@@ -17,12 +17,14 @@ class _LogInState extends State<LogIn> {
   bool _disabledButton = true;
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  var _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Material App',
       home: Scaffold(
+        key: _scaffoldKey,
         backgroundColor: background,
         body: SafeArea(
             child: BlocProvider(
@@ -50,6 +52,16 @@ class _LogInState extends State<LogIn> {
                 );
               } else if (state is LoginLoadingState) {
                 _showLoading = !_showLoading;
+              } else if (state is ResetPasswordEmailState) {
+                _scaffoldKey.currentState
+                  ..hideCurrentSnackBar()
+                  ..showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        "An email has been sent to ${_emailController.text} to reset your password!",
+                      ),
+                    ),
+                  );
               }
             },
             builder: (context, state) {
@@ -184,13 +196,18 @@ class _LogInState extends State<LogIn> {
                         ),
                       ),
                     ),
-                    Text(
-                      "FORGOT PASSWORD?",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Poppins SemiBold',
-                        fontSize: 12,
-                        color: Color(0xFF707070),
+                    GestureDetector(
+                      child: Text(
+                        "FORGOT PASSWORD?",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Poppins SemiBold',
+                          fontSize: 12,
+                          color: Color(0xFF707070),
+                        ),
+                      ),
+                      onTap: () => _loginBloc.add(
+                        ForgotPasswordEvent(email: _emailController.text),
                       ),
                     ),
                     Container(

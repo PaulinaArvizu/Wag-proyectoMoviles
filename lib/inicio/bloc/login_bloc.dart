@@ -63,6 +63,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginErrorState(
             error: "Error al hacer login con email: ${e.toString()}");
       }
+    } else if (event is ForgotPasswordEvent) {
+      await _auth.sendPasswordResetEmail(email: event.email);
+      yield ResetPasswordEmailState();
+      yield StandByState();
     }
   }
 }

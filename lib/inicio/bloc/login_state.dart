@@ -31,3 +31,7 @@ class LoginErrorState extends LoginState {
   @override
   List<Object> get props => [error, code];
 }
+
+class ResetPasswordEmailState extends LoginState {}
+
+class StandByState extends LoginState {}
