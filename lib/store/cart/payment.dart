@@ -146,8 +146,9 @@ class _PaymentState extends State<Payment> {
                 child: Text('Confirm and Go to Home page'),
                 onPressed: () {
                   widget.storeBloc.add(PaymentSuccessEvent());
-                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (BuildContext context) => HomePage()));
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                      (Route<dynamic> route) => false);
                 },
               ),
             ],
