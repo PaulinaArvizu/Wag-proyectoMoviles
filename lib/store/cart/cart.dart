@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
-import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
 import 'package:wag_proyecto_moviles/store/cart/payment.dart';
 import 'package:wag_proyecto_moviles/store/bloc/store_bloc.dart';
 
 import 'item_cart.dart';
 
 class Cart extends StatefulWidget {
-  final List<ProductItemCart> productsList;
-  Cart({
-    Key key,
-    @required this.productsList,
-  }) : super(key: key);
+  Cart({Key key}) : super(key: key);
 
   @override
   _CartState createState() => _CartState();
@@ -22,13 +17,6 @@ class _CartState extends State<Cart> {
   StoreBloc _storeBloc;
   double _total = 0;
   List _productsList = List();
-  @override
-  void initState() {
-    super.initState();
-    for (var item in widget.productsList) {
-      _total += (item.productPrice * item.productAmount);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
