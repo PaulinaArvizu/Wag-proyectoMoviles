@@ -38,3 +38,5 @@ class RemoveFromCartEvent extends StoreEvent {
 }
 
 class PaymentSuccessEvent extends StoreEvent {}
+
+class LeerProductosEvent extends StoreEvent {}
