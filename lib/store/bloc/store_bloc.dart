@@ -1,15 +1,19 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:wag_proyecto_moviles/models/product_item.dart';
 import 'package:wag_proyecto_moviles/models/product_item_cart.dart';
 
 part 'store_event.dart';
 part 'store_state.dart';
 
 class StoreBloc extends Bloc<StoreEvent, StoreState> {
+  List<ProductItem> _productsList;
+
   //referencia a la box previamente abierta (en el main)
   Box _cartBox = Hive.box("Cart");
   List<dynamic> _cartElements = List();
@@ -55,6 +59,33 @@ class StoreBloc extends Bloc<StoreEvent, StoreState> {
       _cartElements.clear();
       _cartBox.put("products", _cartElements);
       yield StandbyState();
+    } else if (event is LeerProductosEvent) {
+      try {
+        await _getAllProducts();
+        yield StoreSuccessState(productsList: _productsList);
+      } catch (e) {
+        yield StoreErrorState(errorMessage: e.toString());
+      }
     }
+  }
+
+  Future _getAllProducts() async {
+    // recuperar lista de docs guardados en Cloud firestore
+    // mapear a objeto de dart (ProductItem)
+    // agregar cada ojeto a una lista
+    var misPosts = await FirebaseFirestore.instance
+        .collection("products")
+        .orderBy("title")
+        .get();
+    _productsList = misPosts.docs
+        .map(
+          (product) => ProductItem(
+            productTitle: product["title"],
+            productDescription: product["description"],
+            productImage: product["imageUrl"],
+            productPrice: double.parse(product["price"]),
+          ),
+        )
+        .toList();
   }
 }
