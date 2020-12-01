@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
+import 'package:wag_proyecto_moviles/inicio/bloc/login_bloc.dart';
 import 'package:wag_proyecto_moviles/inicio/login.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:wag_proyecto_moviles/profile/bloc/profile_bloc.dart';
@@ -411,9 +412,11 @@ class _ProfileState extends State<Profile> {
               onPressed: () {
                 _bloc.add(ProfileLogOutEvent());
                 Navigator.of(_).pop();
+                BlocProvider.of<LoginBloc>(context).add(VerifyLogInEvent());
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => LogIn()),
                     (Route<dynamic> route) => false);
+                // setState(() {});
               },
               child: Text(
                 "Yes!",

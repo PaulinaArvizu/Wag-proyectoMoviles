@@ -33,6 +33,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginLoadingState();
         await _authProvider.signInGoogle();
         yield LoginSuccessState();
+        yield StandByState();
       } catch (e) {
         yield LoginErrorState(
             error: "Error al hacer login con Google: ${e.toString()}");
