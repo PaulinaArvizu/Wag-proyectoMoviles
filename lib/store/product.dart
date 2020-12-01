@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
 import 'package:wag_proyecto_moviles/models/product_item.dart';
@@ -35,9 +36,46 @@ class _ProductState extends State<Product> {
                 child: AspectRatio(
                   aspectRatio: 18 / 11,
                   child: SizedBox(
-                    child: Image.network(
+                    child: ExtendedImage.network(
                       widget.product.productImage,
-                      fit: BoxFit.scaleDown,
+                      fit: BoxFit.contain,
+                      loadStateChanged: (ExtendedImageState state) {
+                        switch (state.extendedImageLoadState) {
+                          case LoadState.loading:
+                            return Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/images/Loading.gif",
+                                  height: 50,
+                                ),
+                                Text("Loading..."),
+                              ],
+                            );
+                            break;
+                          case LoadState.completed:
+                            return Image.network(
+                              widget.product.productImage,
+                              fit: BoxFit.contain,
+                            );
+                            break;
+                          case LoadState.failed:
+                            return Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/images/ImageNotFound.png",
+                                  height: 75,
+                                ),
+                                Text("Image not found"),
+                              ],
+                            );
+                            break;
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ),
@@ -56,7 +94,10 @@ class _ProductState extends State<Product> {
                         widget.product.productTitle,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(
+                          fontFamily: "Poppins Regular",
+                          fontSize: 14,
+                        ),
                       ),
                       SizedBox(height: 4),
                       Text(
