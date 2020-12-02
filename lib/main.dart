@@ -44,11 +44,10 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          if (state is StandByState) {}
           if (state is LoginSuccessState) {
             return HomePage();
-          }
-          return LogIn();
+          } else
+            return LogIn();
         },
       ),
       // Product(

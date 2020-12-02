@@ -5,8 +5,6 @@ import 'package:wag_proyecto_moviles/new/new_post.dart';
 import 'package:wag_proyecto_moviles/profile/profile.dart';
 import 'package:wag_proyecto_moviles/store/store.dart';
 
-void main() => runApp(HomePage());
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();

@@ -12,10 +12,14 @@ import 'package:wag_proyecto_moviles/auth/user_auth_provider.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:path/path.dart' as Path;
 
+import '../../inicio/bloc/login_bloc.dart';
+import '../../inicio/bloc/login_bloc.dart';
+
 part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+  LoginBloc _loginBloc = LoginBloc();
   List<Post> _postsList;
   FirebaseAuth _auth = FirebaseAuth.instance;
   File _chosenImage;
@@ -81,6 +85,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       }
       try {
         _authProvider.signOutFirebase();
+        _loginBloc.add(VerifyLogInEvent());
       } catch (e) {
         print(e);
       }

@@ -8,10 +8,9 @@ import 'package:wag_proyecto_moviles/inicio/login.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:wag_proyecto_moviles/profile/bloc/profile_bloc.dart';
 
+import '../inicio/bloc/login_bloc.dart';
 import 'editPost.dart';
 import 'editProfile.dart';
-
-void main() => runApp(Profile());
 
 class Profile extends StatefulWidget {
   // This widget is the root of your application.
@@ -212,7 +211,10 @@ class _ProfileState extends State<Profile> {
                                           Icons.logout,
                                           color: background,
                                         ),
-                                        onPressed: _showLogoutDialog,
+                                        onPressed: () async {
+                                          await _showLogoutDialog();
+                                          LoginBloc().add(VerifyLogInEvent());
+                                        },
                                       ),
                                     ],
                                   ),
@@ -388,7 +390,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  _showLogoutDialog() {
+  _showLogoutDialog() async {
     showDialog(
       context: context,
       builder: (_) {
@@ -398,7 +400,7 @@ class _ProfileState extends State<Profile> {
           actions: [
             FlatButton(
               onPressed: () {
-                Navigator.of(_).pop();
+                Navigator.of(_).pop(false);
               },
               child: Text(
                 "No",
@@ -411,11 +413,11 @@ class _ProfileState extends State<Profile> {
             FlatButton(
               onPressed: () {
                 _bloc.add(ProfileLogOutEvent());
-                Navigator.of(_).pop();
-                BlocProvider.of<LoginBloc>(context).add(VerifyLogInEvent());
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => LogIn()),
-                    (Route<dynamic> route) => false);
+                Navigator.of(_).pop(true);
+
+                // Navigator.of(context).pushAndRemoveUntil(
+                //     MaterialPageRoute(builder: (context) => LogIn()),
+                //     (Route<dynamic> route) => false);
                 // setState(() {});
               },
               child: Text(

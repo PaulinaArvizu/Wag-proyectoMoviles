@@ -10,9 +10,13 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  static final LoginBloc _instance = LoginBloc._internal();
+  factory LoginBloc() {
+    return _instance;
+  }
+  LoginBloc._internal() : super(LoginInitial());
   UserAuthProvider _authProvider = UserAuthProvider();
   FirebaseAuth _auth = FirebaseAuth.instance;
-  LoginBloc() : super(LoginInitial());
 
   @override
   Stream<LoginState> mapEventToState(
@@ -33,7 +37,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginLoadingState();
         await _authProvider.signInGoogle();
         yield LoginSuccessState();
-        yield StandByState();
       } catch (e) {
         yield LoginErrorState(
             error: "Error al hacer login con Google: ${e.toString()}");
