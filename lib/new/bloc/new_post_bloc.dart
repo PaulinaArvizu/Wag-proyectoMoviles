@@ -25,13 +25,8 @@ class NewPostBloc extends Bloc<NewPostEvent, NewPostState> {
   Stream<NewPostState> mapEventToState(
     NewPostEvent event,
   ) async* {
-    if (event is LeerPostsEvent) {
-      try {
-        await _getAllPosts();
-        yield NewPostSuccessState();
-      } catch (e) {
-        yield NewPostErrorState(errorMessage: "Couldn't get posts: \n$e");
-      }
+    if (event is NewPostInitialEvent) {
+      yield NewPostSuccessState();
     } else if (event is CargarImagenEvent) {
       _chosenImage = await _chooseImage(event.takePictureFromCamera);
       if (_chosenImage != null) {

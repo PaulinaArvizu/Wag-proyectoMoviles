@@ -57,7 +57,7 @@ class _NewPostState extends State<NewPost> {
       body: BlocProvider(
         create: (context) {
           _bloc = NewPostBloc();
-          return _bloc..add(LeerPostsEvent());
+          return _bloc..add(NewPostInitialEvent());
         },
         child: BlocConsumer<NewPostBloc, NewPostState>(
           listener: (context, state) {

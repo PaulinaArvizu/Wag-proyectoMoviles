@@ -40,7 +40,7 @@ class CargarImagenEvent extends NewPostEvent {
   List<Object> get props => [takePictureFromCamera];
 }
 
-class LeerPostsEvent extends NewPostEvent {
+class NewPostInitialEvent extends NewPostEvent {
   @override
   List<Object> get props => [];
 }
