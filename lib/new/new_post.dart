@@ -103,13 +103,13 @@ class _NewPostState extends State<NewPost> {
                     content: Text("Success: post created"),
                   ),
                 );
+              _clearForm();
             } else if (state is ImagenCargadaState) {
               _chosenImage = state.imagen;
             }
           },
           builder: (context, state) {
             if (state is NewPostCreatedState) {
-              _clearForm();
               return _newPostForm();
             }
             return _newPostForm();
@@ -440,19 +440,18 @@ class _NewPostState extends State<NewPost> {
   }
 
   _clearForm() {
-    setState(() {
-      //borrar el formulario
-      _nameController.clear();
-      _sizeController.clear();
-      _ageController.clear();
-      _descriptionController.clear();
-      _contactInfoController.clear();
-      _chosenImage = null;
+    //borrar el formulario
+    _nameController.clear();
+    _sizeController.clear();
+    _ageController.clear();
+    _descriptionController.clear();
+    _contactInfoController.clear();
+    _chosenImage = null;
 
-      _sizeEmptyError = true;
-      _descriptionEmptyError = true;
-      _contactEmptyError = true;
-    });
+    _sizeEmptyError = true;
+    _descriptionEmptyError = true;
+    _contactEmptyError = true;
+    setState(() {});
   }
 
   String _missingFields() {

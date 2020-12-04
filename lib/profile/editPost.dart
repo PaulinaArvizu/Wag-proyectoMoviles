@@ -111,7 +111,6 @@ class _EditPostState extends State<EditPost> {
           },
           builder: (context, state) {
             if (state is EditPostUpdatedState) {
-              _clearForm();
               Navigator.of(context).pop('Save');
               return _newPostForm();
             }
@@ -465,18 +464,17 @@ class _EditPostState extends State<EditPost> {
   }
 
   _clearForm() {
-    setState(() {
-      //borrar el formulario
-      _nameController.clear();
-      _sizeController.clear();
-      _ageController.clear();
-      _descriptionController.clear();
-      _contactInfoController.clear();
+    //borrar el formulario
+    _nameController.clear();
+    _sizeController.clear();
+    _ageController.clear();
+    _descriptionController.clear();
+    _contactInfoController.clear();
 
-      _sizeEmptyError = true;
-      _descriptionEmptyError = true;
-      _contactEmptyError = true;
-    });
+    _sizeEmptyError = true;
+    _descriptionEmptyError = true;
+    _contactEmptyError = true;
+    setState(() {});
   }
 
   String _missingFields() {
