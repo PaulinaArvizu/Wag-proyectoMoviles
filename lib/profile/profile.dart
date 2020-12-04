@@ -3,12 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wag_proyecto_moviles/colors.dart';
-import 'package:wag_proyecto_moviles/inicio/bloc/login_bloc.dart';
-import 'package:wag_proyecto_moviles/inicio/login.dart';
 import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:wag_proyecto_moviles/profile/bloc/profile_bloc.dart';
 
-import '../inicio/bloc/login_bloc.dart';
 import 'editPost.dart';
 import 'editProfile.dart';
 

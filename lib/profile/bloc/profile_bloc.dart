@@ -13,7 +13,6 @@ import 'package:wag_proyecto_moviles/models/post.dart';
 import 'package:path/path.dart' as Path;
 
 import '../../inicio/bloc/login_bloc.dart';
-import '../../inicio/bloc/login_bloc.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
