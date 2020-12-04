@@ -115,6 +115,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ),
         )
         .toList();
+    _postsList.sort((a, b) => b.date.compareTo(a.date));
     print(_postsList);
   }
 
