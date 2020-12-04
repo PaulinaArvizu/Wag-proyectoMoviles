@@ -213,7 +213,6 @@ class _ProfileState extends State<Profile> {
                                         ),
                                         onPressed: () async {
                                           await _showLogoutDialog();
-                                          LoginBloc().add(VerifyLogInEvent());
                                         },
                                       ),
                                     ],

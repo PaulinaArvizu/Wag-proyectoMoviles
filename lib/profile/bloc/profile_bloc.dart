@@ -79,12 +79,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } else if (event is ProfileLogOutEvent) {
       UserAuthProvider _authProvider = UserAuthProvider();
       try {
-        _authProvider.signOutGoogle();
+        await _authProvider.signOutGoogle();
       } catch (e) {
         print(e);
       }
       try {
-        _authProvider.signOutFirebase();
+        await _authProvider.signOutFirebase();
         _loginBloc.add(VerifyLogInEvent());
       } catch (e) {
         print(e);

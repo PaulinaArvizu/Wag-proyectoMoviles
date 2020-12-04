@@ -10,11 +10,11 @@ class UserAuthProvider {
     return user != null;
   }
 
-  void signOutGoogle() async {
+  signOutGoogle() async {
     await _googleSignIn.signOut();
   }
 
-  void signOutFirebase() async {
+  signOutFirebase() async {
     await FirebaseAuth.instance.signOut();
   }
 
